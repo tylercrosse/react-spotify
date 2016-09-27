@@ -1,28 +1,28 @@
-var express = require('express');
-var request = require('request');
-var querystring = require('querystring');
-var cookieParser = require('cookie-parser');
-var secrets = require('./secrets.js');
-var port = 8888;
-var stateKey = 'spotify_auth_state';
+import express from 'express';
+import request from 'request';
+import querystring from 'querystring';
+import cookieParser from 'cookie-parser';
+import { secrets } from './secrets.js';
+const port = 8888;
+const stateKey = 'spotify_auth_state';
 
 function generateRandomString(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (var i = 0; i < length; i++) {
+  let text = '';
+  let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
 }
 
-var app = express();
+const app = express();
 
 app.use(express.static(__dirname + '/public'))
    .use(cookieParser());
 
-app.get('/login', function(req, res) {
-  var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email';
+app.get('/login', (req, res) => {
+  let state = generateRandomString(16);
+  let scope = 'user-read-private user-read-email';
   res.cookie(stateKey, state);
   
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -35,10 +35,10 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('/callback', function(req, res) {
-  var code = req.query.code || null;
-  var state = req.query.state || null;
-  var storedState = req.cookies ? req.cookies[stateKey] : null;
+app.get('/callback', (req, res) => {
+  let code = req.query.code || null;
+  let state = req.query.state || null;
+  let storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
     res.redirect('/#' +
@@ -47,7 +47,7 @@ app.get('/callback', function(req, res) {
       }));
   } else {
     res.clearCookie(stateKey);
-    var authOptions = {
+    let authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
@@ -60,19 +60,19 @@ app.get('/callback', function(req, res) {
       json: true
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, (error, response, body) => {
       if (!error && response.statusCode === 200) {
 
-        var access_token = body.access_token,
+        let access_token = body.access_token,
             refresh_token = body.refresh_token;
 
-        var options = {
+        let options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
 
-        request.get(options, function(error, response, body) {
+        request.get(options, (error, response, body) => {
           console.log(body);
         });
 
@@ -91,9 +91,9 @@ app.get('/callback', function(req, res) {
   }
 });
 
-app.get('/refresh_token', function(req, res) {
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
+app.get('/refresh_token', (req, res) => {
+  let refresh_token = req.query.refresh_token;
+  let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {'Authorization': 'Basic ' + (new Buffer(secrets.client_id + ':' + secrets.client_secret).toString('base64'))},
     form: {
@@ -103,9 +103,9 @@ app.get('/refresh_token', function(req, res) {
     json: true
   };
   
-  request.post(authOptions, function(error, respnse, body) {
+  request.post(authOptions, (error, response, body) => {
     if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
+      let access_token = body.access_token;
       res.send({
         'access_token': access_token
       });
@@ -113,6 +113,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log('App listening on port '+ port)
 })
