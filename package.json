@@ -16,6 +16,7 @@
     "webpack": "^1.13.2"
   },
   "scripts": {
+    "start": "nodemon entry.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
