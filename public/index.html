@@ -5,40 +5,11 @@
   <title>Express Spotify Oauth</title>
 </head>
 <body>
-  <div id="login">
-    <h1>Test of Auth Code</h1>
-    <a href="/login">Log in with Spotify</a>
-  </div>
-  <div id="loggedin">
-    <div id="user-profile"></div>
-    <div id="oauth"></div>
-    <button id="obtain-new-token">Obtain new token using refresh token</button>
-  </div>
+  <div id="app"></div>
   
-  <script id="user-profile-template" type="text/x-handlebars-template">
-    <h1>Logged in as {{display_name}}</h1>
-    <img width="150" src="{{images.0.url}}" alt="profile image">
-    <dl>
-      <dt>Display Name</dt><dd>{{display_name}}</dd>
-      <dt>Id</dt><dd>{{id}}</dd>
-      <dt>Email</dt><dd>{{email}}</dd>
-      <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-      <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-      <dt>Profile Image</dt><dd><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-      <dt>Country</dt><dd>{{country}}</dd>
-    </dl>
-  </script>
-  
-  <script id="oauth-template" type="text/x-handlebars-template">
-    <h2>oAuth info</h2>
-    <dl>
-      <dt>Access token</dt><dd>{{access_token}}</dd>
-      <dt>Refresh token</dt><dd>{{refresh_token}}</dd>z
-    </dl>
-  </script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script>
+  <script type="text/babel" src="script.js"></script>
 </body>
 </html>
