@@ -60,14 +60,6 @@ class Container extends React.Component{
       })
       .catch((err) => {console.log('Request failed', err)})
   }
-  getMyPlaylists() {
-    fetch('https://api.spotify.com/v1/me/playlists', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('Request succesful', json);
-      })
-      .catch((err) => {console.log('Request failed', err)})
-  }
   artistSearchResults(search) {
     fetch(`https://api.spotify.com/v1/search?q=${fixedEncodeURIComponent(search)}&type=artist`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
       .then((res) => res.json())
@@ -89,14 +81,14 @@ class Container extends React.Component{
     return (
       <div>
         <LoggedIn />
-        <OauthTemplate />
+        <OauthTemplate access_token={this.state.access_token} refresh_token={this.state.refresh_token} />
         <UserProfile {...this.state.userData} />
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
+        {this.state.artistSearched ? <ArtistsResults results={this.state.artistRes} /> : null}
       </div>
     )
   }
 }
-// FIXME {this.state.artistSearched ? <ArtistsResults results={this.state.artistRes} /> : null}
 
 class ArtistSearch extends React.Component {
   constructor() {
@@ -119,7 +111,7 @@ class ArtistSearch extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" value={this.state.newSearch} onChange= {(e) => this.updateNewSearch(e)} />
+        <input type="text" value={this.state.artistSearch} onChange= {(e) => this.updateNewSearch(e)} />
         <button onClick={(e) => this.handleArtistSearch(e)}>Search Artists</button>
       </div>
     )
@@ -131,10 +123,10 @@ class ArtistsResults extends React.Component {
       <div>
         <h3>Artists</h3>
         <ul>
-          {this.props.results.artsts.items.map((artist) => (
+          {this.props.results.artists.items.map((artist) => (
             <li key={artist.id}>
               <p>Name: {artist.name}</p>
-              <img width="150" src={artist.images[0].url} alt="profile image" />
+              {(artist.images.length > 0) ? <img width="150" src={artist.images[0].url} alt="profile image" /> : null}
             </li>
           ))}
         </ul>
@@ -186,8 +178,8 @@ class OauthTemplate extends React.Component{
       <div>
         <h2>oAuth info</h2>
         <dl>
-          <dt>Access token</dt><dd>{access_token}</dd>
-          <dt>Refresh token</dt><dd>{refresh_token}</dd>z
+          <dt>Access token</dt><dd>{this.props.access_token}</dd>
+          <dt>Refresh token</dt><dd>{this.props.refresh_token}</dd>z
         </dl>
       </div>
     )
