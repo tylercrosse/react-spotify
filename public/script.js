@@ -1,15 +1,18 @@
-
-let params = getHashParams()
-let access_token = params.access_token;
-let refresh_token = params.refresh_token;
-params.error ? alert('There was an error during the authentication') : null;
-let res = {};
-if (access_token) {
-  fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + access_token}})
-    .then((res) => {return res.json()})
-    .then((json) => {res = json })
-    .catch((err) => {console.log('Request failed', err)})
-}
+// TODO add feature to react
+ // document.getElementById('obtain-new-token').addEventListener('click', function() {
+//   $.ajax({
+//     url: '/refresh_token',
+//     data: {
+//       'refresh_token': refresh_token
+//     }
+//   }).done(function(data) {
+//     access_token = data.access_token;
+//     oauthPlaceholder.innerHTML = oauthTemplate({
+//       access_token: access_token,
+//       refresh_token: refresh_token
+//     });
+//   });
+// }, false);
 
 function getHashParams() {
   let hashParams = {};
@@ -21,22 +24,58 @@ function getHashParams() {
   }
   return hashParams
 }
+function fixedEncodeURIComponent(str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
+}
 
 class Container extends React.Component{
   constructor() {
     super();
     this.state = {
       access_token: false,
-      userData: null
+      refresh_token: false,
+      userData: null,
+      artistSearched: false,
+      artistRes: {}
     }
   }
   componentWillMount() {
-    fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + access_token}})
-      .then((res) => {return res.json()})
+    let params = getHashParams()
+    params.error ? alert('There was an error during the authentication') : null;
+    this.setState({
+      access_token: params.access_token,
+      refresh_token: params.refresh_token
+    })
+  }
+  componentDidMount() {
+    fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+      .then((res) => res.json())
       .then((json) => {
         console.log('Request succesful', json);
         this.setState({
           userData: json
+        });
+      })
+      .catch((err) => {console.log('Request failed', err)})
+  }
+  getMyPlaylists() {
+    fetch('https://api.spotify.com/v1/me/playlists', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('Request succesful', json);
+      })
+      .catch((err) => {console.log('Request failed', err)})
+  }
+  artistSearchResults(search) {
+    fetch(`https://api.spotify.com/v1/search?q=${fixedEncodeURIComponent(search)}&type=artist`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('Request succesful', json);
+        this.setState({
+          artistSearched: true,
+          artistRes: json
         });
       })
       .catch((err) => {console.log('Request failed', err)})
@@ -50,8 +89,55 @@ class Container extends React.Component{
     return (
       <div>
         <LoggedIn />
-        {access_token ? <OauthTemplate /> : null}
+        <OauthTemplate />
         <UserProfile {...this.state.userData} />
+        <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
+      </div>
+    )
+  }
+}
+// FIXME {this.state.artistSearched ? <ArtistsResults results={this.state.artistRes} /> : null}
+
+class ArtistSearch extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      artistSearch: ''
+    }
+  }
+  updateNewSearch(e) {
+    this.setState({
+      artistSearch: e.target.value
+    });
+  }
+  handleArtistSearch() {
+    this.props.newSearch(this.state.artistSearch);
+    this.setState({
+      artistSearch: ''
+    })
+  }
+  render() {
+    return (
+      <div>
+        <input type="text" value={this.state.newSearch} onChange= {(e) => this.updateNewSearch(e)} />
+        <button onClick={(e) => this.handleArtistSearch(e)}>Search Artists</button>
+      </div>
+    )
+  }
+}
+class ArtistsResults extends React.Component {
+  render() {
+    return (
+      <div>
+        <h3>Artists</h3>
+        <ul>
+          {this.props.results.artsts.items.map((artist) => (
+            <li key={artist.id}>
+              <p>Name: {artist.name}</p>
+              <img width="150" src={artist.images[0].url} alt="profile image" />
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }
@@ -112,53 +198,3 @@ ReactDOM.render(
   <Container />,
   document.getElementById('app')
 );
-
-
-function oldCode() {
-  var params = getHashParams();
-  var access_token = params.access_token;
-  var refresh_token = params.refresh_token;
-  var error = params.error;
-  
-  if (error) {
-    alert('There was an error during the authentication');
-  } else {
-    if (access_token) {
-      oauthPlaceholder.innerHTML = oauthTemplate({
-        access_token: access_token,
-        refresh_token: refresh_token
-      });
-      
-      $.ajax({
-        url: 'https://api.spotify.com/v1/me',
-        headers: {
-          'Authorization': 'Bearer ' + access_token
-        },
-        success: function(response) {
-          userProfilePlaceHolder.innerHTML = userProfileTemplate(response);
-          
-          $('#login').hide();
-          $('#loggedin').show();
-        }
-      });
-    } else {
-      $('#login').show();
-      $('#loggedin').hide();
-    }
-    
-    document.getElementById('obtain-new-token').addEventListener('click', function() {
-      $.ajax({
-        url: '/refresh_token',
-        data: {
-          'refresh_token': refresh_token
-        }
-      }).done(function(data) {
-        access_token = data.access_token;
-        oauthPlaceholder.innerHTML = oauthTemplate({
-          access_token: access_token,
-          refresh_token: refresh_token
-        });
-      });
-    }, false);
-  }
-};
