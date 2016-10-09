@@ -80,11 +80,8 @@ class Container extends React.Component{
     }
     return (
       <div>
-        <LoggedIn />
-        <OauthTemplate access_token={this.state.access_token} refresh_token={this.state.refresh_token} />
-        <UserProfile {...this.state.userData} />
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
-        {this.state.artistSearched ? <ArtistsResults results={this.state.artistRes} /> : null}
+        {this.state.artistSearched ? <ArtistsList results={this.state.artistRes} access_token={this.state.access_token} /> : null}
       </div>
     )
   }
@@ -117,19 +114,45 @@ class ArtistSearch extends React.Component {
     )
   }
 }
-class ArtistsResults extends React.Component {
+class ArtistsList extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      clicked: false
+    }
+  }
+  getRelatedArtists(id) {
+    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.props.access_token}})
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('Request succesful', json);
+        // state?
+      })
+      .catch((err) => {console.log('Request failed', err)})
+  }
   render() {
     return (
       <div>
         <h3>Artists</h3>
         <ul>
-          {this.props.results.artists.items.map((artist) => (
-            <li key={artist.id}>
-              <p>Name: {artist.name}</p>
-              {(artist.images.length > 0) ? <img width="150" src={artist.images[0].url} alt="profile image" /> : null}
-            </li>
+          {this.props.results.artists.items.map((artist, index) => (
+            <Artist artistId={(id) => this.getRelatedArtists(id)} artist={artist} key={index} />
           ))}
         </ul>
+      </div>
+    )
+  }
+}
+class Artist extends React.Component {
+  handleClick(e) {
+    this.props.artistId(this.props.artist.id);
+  }
+  render() {
+    return (
+      <div key={this.props.artist.id}>
+        <p>Name: {this.props.artist.name}</p>
+        {(this.props.artist.images.length > 0) ? <img width="150" src={this.props.artist.images[0].url} alt="profile image" /> : null}
+        <button onClick={(e) => this.handleClick(e)}>Get Related Artists</button>
       </div>
     )
   }
@@ -144,47 +167,48 @@ class Login extends React.Component{
     )
   }
 }
-class LoggedIn extends React.Component{
-  render() {
-    return (
-      <div id="loggedin">
-        <button id="obtain-new-token">Obtain new token using refresh token</button>
-      </div>      
-    )
-  }
-}
-class UserProfile extends React.Component{
-  render() {
-    return (
-      <div>
-        <h1>Logged in as {this.props.display_name}</h1>
-        <img width="150" src={this.props.images[0].url} alt="profile image" />
-        <dl>
-          <dt>Display Name</dt><dd>{this.props.display_name}</dd>
-          <dt>Id</dt><dd>{this.props.id}</dd>
-          <dt>Email</dt><dd>{this.props.email}</dd>
-          <dt>Spotify URI</dt>
-          <dd><a href={this.props.external_urls.spotify}>{this.props.external_urls.spotify}</a></dd>
-          <dt>Link</dt><dd><a href={this.props.href}>{this.props.href}</a></dd>
-          <dt>Country</dt><dd>{this.props.country}</dd>
-        </dl>
-      </div>
-    )
-  }
-}
-class OauthTemplate extends React.Component{
-  render() {
-    return (
-      <div>
-        <h2>oAuth info</h2>
-        <dl>
-          <dt>Access token</dt><dd>{this.props.access_token}</dd>
-          <dt>Refresh token</dt><dd>{this.props.refresh_token}</dd>z
-        </dl>
-      </div>
-    )
-  }
-}
+// TODO move to seperate file
+// class LoggedIn extends React.Component{
+//   render() {
+//     return (
+//       <div id="loggedin">
+//         <button id="obtain-new-token">Obtain new token using refresh token</button>
+//       </div>      
+//     )
+//   }
+// }
+// class UserProfile extends React.Component{
+//   render() {
+//     return (
+//       <div>
+//         <h1>Logged in as {this.props.display_name}</h1>
+//         <img width="150" src={this.props.images[0].url} alt="profile image" />
+//         <dl>
+//           <dt>Display Name</dt><dd>{this.props.display_name}</dd>
+//           <dt>Id</dt><dd>{this.props.id}</dd>
+//           <dt>Email</dt><dd>{this.props.email}</dd>
+//           <dt>Spotify URI</dt>
+//           <dd><a href={this.props.external_urls.spotify}>{this.props.external_urls.spotify}</a></dd>
+//           <dt>Link</dt><dd><a href={this.props.href}>{this.props.href}</a></dd>
+//           <dt>Country</dt><dd>{this.props.country}</dd>
+//         </dl>
+//       </div>
+//     )
+//   }
+// }
+// class OauthTemplate extends React.Component{
+//   render() {
+//     return (
+//       <div>
+//         <h2>oAuth info</h2>
+//         <dl>
+//           <dt>Access token</dt><dd>{this.props.access_token}</dd>
+//           <dt>Refresh token</dt><dd>{this.props.refresh_token}</dd>z
+//         </dl>
+//       </div>
+//     )
+//   }
+// }
 
 ReactDOM.render(
   <Container />,
