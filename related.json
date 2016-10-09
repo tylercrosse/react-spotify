@@ -1,0 +1,627 @@
+{
+  "artists" : [ {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/4M5nCE77Qaxayuhp3fVn4V"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 415370
+    },
+    "genres" : [ "anti-folk", "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "lo-fi", "neo mellow", "new americana", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/4M5nCE77Qaxayuhp3fVn4V",
+    "id" : "4M5nCE77Qaxayuhp3fVn4V",
+    "images" : [ {
+      "height" : 667,
+      "url" : "https://i.scdn.co/image/8f1fb8236236ff0724a46bfb08732af0857a9eb2",
+      "width" : 1000
+    }, {
+      "height" : 427,
+      "url" : "https://i.scdn.co/image/cfb9dedd901a5bb877bca4ef426d87a5fd73fe8f",
+      "width" : 640
+    }, {
+      "height" : 133,
+      "url" : "https://i.scdn.co/image/ec07a0a7b6f393fd82ba651979cc7b35df0fd2c6",
+      "width" : 200
+    }, {
+      "height" : 43,
+      "url" : "https://i.scdn.co/image/2bd13b1e8702f81ddfc37365c42f1c320e650c16",
+      "width" : 64
+    } ],
+    "name" : "Iron & Wine",
+    "popularity" : 69,
+    "type" : "artist",
+    "uri" : "spotify:artist:4M5nCE77Qaxayuhp3fVn4V"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/4EVpmkEwrLYEg6jIsiPMIb"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 461654
+    },
+    "genres" : [ "anti-folk", "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "lo-fi", "neo-psychedelic", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/4EVpmkEwrLYEg6jIsiPMIb",
+    "id" : "4EVpmkEwrLYEg6jIsiPMIb",
+    "images" : [ {
+      "height" : 604,
+      "url" : "https://i.scdn.co/image/a167da087f2744735fc340fe978ad911fd4fd6e3",
+      "width" : 1000
+    }, {
+      "height" : 386,
+      "url" : "https://i.scdn.co/image/bb4dbe5f9a47d4bf0a75a2f18a34f4eb4f469e95",
+      "width" : 639
+    }, {
+      "height" : 121,
+      "url" : "https://i.scdn.co/image/9886c6b3a20e88ea44a60930038b660e9391cb92",
+      "width" : 200
+    }, {
+      "height" : 39,
+      "url" : "https://i.scdn.co/image/6e4d693689b816e31ebab908d9c8cce21cca9731",
+      "width" : 64
+    } ],
+    "name" : "Fleet Foxes",
+    "popularity" : 67,
+    "type" : "artist",
+    "uri" : "spotify:artist:4EVpmkEwrLYEg6jIsiPMIb"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/0OdUWJ0sBjDrqHygGUXeCF"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 499897
+    },
+    "genres" : [ "alternative rock", "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "lo-fi", "singer-songwriter", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/0OdUWJ0sBjDrqHygGUXeCF",
+    "id" : "0OdUWJ0sBjDrqHygGUXeCF",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://i.scdn.co/image/0f9a5013134de288af7d49a962417f4200539b47",
+      "width" : 640
+    }, {
+      "height" : 320,
+      "url" : "https://i.scdn.co/image/8ae35be1043f330173de198c35a49161337e829c",
+      "width" : 320
+    }, {
+      "height" : 160,
+      "url" : "https://i.scdn.co/image/602dd7b3a2ee3f3fd86c6c4f50ab9b5a82e23c59",
+      "width" : 160
+    } ],
+    "name" : "Band of Horses",
+    "popularity" : 70,
+    "type" : "artist",
+    "uri" : "spotify:artist:0OdUWJ0sBjDrqHygGUXeCF"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/2BpAc5eK7Rz5GAwSp9UYXa"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 335897
+    },
+    "genres" : [ "anti-folk", "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "new americana", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/2BpAc5eK7Rz5GAwSp9UYXa",
+    "id" : "2BpAc5eK7Rz5GAwSp9UYXa",
+    "images" : [ {
+      "height" : 1507,
+      "url" : "https://i.scdn.co/image/d4242dc3996e09b24eeebf017d046e0d3723826b",
+      "width" : 1000
+    }, {
+      "height" : 964,
+      "url" : "https://i.scdn.co/image/c410ab4eb9b2b8d58e20cae835d10e21717295ea",
+      "width" : 640
+    }, {
+      "height" : 301,
+      "url" : "https://i.scdn.co/image/77688d2e37ce4a40df8b38d041f5bfc57188c6aa",
+      "width" : 200
+    }, {
+      "height" : 96,
+      "url" : "https://i.scdn.co/image/372cef58ab02f44ec37fcd5d8e157c007e442c23",
+      "width" : 64
+    } ],
+    "name" : "The Tallest Man On Earth",
+    "popularity" : 65,
+    "type" : "artist",
+    "uri" : "spotify:artist:2BpAc5eK7Rz5GAwSp9UYXa"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/4MXUO7sVCaFgFjoTI5ox5c"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 385464
+    },
+    "genres" : [ "anti-folk", "chamber pop", "folk christmas", "folk-pop", "freak folk", "indie christmas", "indie folk", "indie pop", "indie rock", "lo-fi", "neo-psychedelic", "pop christmas", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/4MXUO7sVCaFgFjoTI5ox5c",
+    "id" : "4MXUO7sVCaFgFjoTI5ox5c",
+    "images" : [ {
+      "height" : 942,
+      "url" : "https://i.scdn.co/image/c9475278ed947f3b8241b5504ef8c7830897892b",
+      "width" : 942
+    }, {
+      "height" : 640,
+      "url" : "https://i.scdn.co/image/dc60553d1b8e3f0e976c97b2aed045bee9059dd0",
+      "width" : 640
+    }, {
+      "height" : 200,
+      "url" : "https://i.scdn.co/image/5c078677dd2790ed794c76756e6d9d8e7423d826",
+      "width" : 200
+    }, {
+      "height" : 64,
+      "url" : "https://i.scdn.co/image/d78df92a983c2770777790a621e4a58928ee6ff9",
+      "width" : 64
+    } ],
+    "name" : "Sufjan Stevens",
+    "popularity" : 69,
+    "type" : "artist",
+    "uri" : "spotify:artist:4MXUO7sVCaFgFjoTI5ox5c"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/6xrCU6zdcSTsG2hLrojpmI"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 427935
+    },
+    "genres" : [ "chamber pop", "folk christmas", "folk-pop", "indie folk", "indie pop", "neo mellow", "singer-songwriter", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/6xrCU6zdcSTsG2hLrojpmI",
+    "id" : "6xrCU6zdcSTsG2hLrojpmI",
+    "images" : [ {
+      "height" : 584,
+      "url" : "https://i.scdn.co/image/1c5b835d83fb7451c409afba6867d069a8acf596",
+      "width" : 999
+    }, {
+      "height" : 374,
+      "url" : "https://i.scdn.co/image/ea69a34d136f7c69c472ca95961633150f8075d1",
+      "width" : 640
+    }, {
+      "height" : 117,
+      "url" : "https://i.scdn.co/image/63abbc1cf5b35b8a28f5e07197fa24c3140cbc83",
+      "width" : 200
+    }, {
+      "height" : 37,
+      "url" : "https://i.scdn.co/image/291445e625a743e5b4525cde8603de689b6005a9",
+      "width" : 63
+    } ],
+    "name" : "José González",
+    "popularity" : 70,
+    "type" : "artist",
+    "uri" : "spotify:artist:6xrCU6zdcSTsG2hLrojpmI"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/7giUHu5pv6YTZgSkxxCcgh"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 508358
+    },
+    "genres" : [ "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "indietronica", "la indie", "new americana", "singer-songwriter", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/7giUHu5pv6YTZgSkxxCcgh",
+    "id" : "7giUHu5pv6YTZgSkxxCcgh",
+    "images" : [ {
+      "height" : 968,
+      "url" : "https://i.scdn.co/image/a463748ab96b61a7b839d1e4328e2d33e9a512c6",
+      "width" : 924
+    }, {
+      "height" : 670,
+      "url" : "https://i.scdn.co/image/5a3fe5db609887e8490d35de806a8c51ba02588a",
+      "width" : 640
+    }, {
+      "height" : 210,
+      "url" : "https://i.scdn.co/image/940a038e44f6f1659066341a08139b7846a5d78b",
+      "width" : 200
+    }, {
+      "height" : 67,
+      "url" : "https://i.scdn.co/image/dfe3fd01b4fd6bf997cc8ae07445761f44829147",
+      "width" : 64
+    } ],
+    "name" : "Edward Sharpe & The Magnetic Zeros",
+    "popularity" : 68,
+    "type" : "artist",
+    "uri" : "spotify:artist:7giUHu5pv6YTZgSkxxCcgh"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/3gd8FJtBJtkRxdfbTu19U2"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 3029376
+    },
+    "genres" : [ "folk-pop", "indie folk", "indie pop", "indie rock", "neo mellow", "pop", "pop rock", "singer-songwriter" ],
+    "href" : "https://api.spotify.com/v1/artists/3gd8FJtBJtkRxdfbTu19U2",
+    "id" : "3gd8FJtBJtkRxdfbTu19U2",
+    "images" : [ {
+      "height" : 1000,
+      "url" : "https://i.scdn.co/image/8dff0f92819275feabea7fb4c65d1409a1a99127",
+      "width" : 1000
+    }, {
+      "height" : 640,
+      "url" : "https://i.scdn.co/image/d6104bcaabe6854be406e5743d9bde6716e7d0fe",
+      "width" : 640
+    }, {
+      "height" : 200,
+      "url" : "https://i.scdn.co/image/ed2faba8c2ec01a4d8418905fa3f96f3b8e7cc9d",
+      "width" : 200
+    }, {
+      "height" : 64,
+      "url" : "https://i.scdn.co/image/b6628e4a0d426b3d1d93bbe49fc5ab9a2a9a9301",
+      "width" : 64
+    } ],
+    "name" : "Mumford & Sons",
+    "popularity" : 80,
+    "type" : "artist",
+    "uri" : "spotify:artist:3gd8FJtBJtkRxdfbTu19U2"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/6pmxr66tMAePxzOLfjGNcX"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 460203
+    },
+    "genres" : [ "albuquerque indie", "anti-folk", "chamber pop", "dream pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "lo-fi", "neo-psychedelic", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/6pmxr66tMAePxzOLfjGNcX",
+    "id" : "6pmxr66tMAePxzOLfjGNcX",
+    "images" : [ {
+      "height" : 738,
+      "url" : "https://i.scdn.co/image/1820e50b4406323a2f89731fc015b0bf86731879",
+      "width" : 999
+    }, {
+      "height" : 473,
+      "url" : "https://i.scdn.co/image/4575403210c79212616606899017c95a3791ba75",
+      "width" : 640
+    }, {
+      "height" : 148,
+      "url" : "https://i.scdn.co/image/51b1c34c651a3d5397808e734c9d4adfc0941cac",
+      "width" : 200
+    }, {
+      "height" : 47,
+      "url" : "https://i.scdn.co/image/bade6edf495f404c03ba924c09d1b44c611c7053",
+      "width" : 64
+    } ],
+    "name" : "Beirut",
+    "popularity" : 64,
+    "type" : "artist",
+    "uri" : "spotify:artist:6pmxr66tMAePxzOLfjGNcX"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/5EM6xJN2QNk0cL7EEm9HR9"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 188674
+    },
+    "genres" : [ "chamber pop", "folk-pop", "indie folk", "indie pop", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/5EM6xJN2QNk0cL7EEm9HR9",
+    "id" : "5EM6xJN2QNk0cL7EEm9HR9",
+    "images" : [ {
+      "height" : 852,
+      "url" : "https://i.scdn.co/image/c3e29d3aa9ad05c1514923bb73492585c7e89d34",
+      "width" : 900
+    }, {
+      "height" : 606,
+      "url" : "https://i.scdn.co/image/6626ae8aa9f70cf32f765ade86313973ce541dce",
+      "width" : 640
+    }, {
+      "height" : 189,
+      "url" : "https://i.scdn.co/image/3d8ef0b9b78cecc6ac359231ea04ee10efedefa6",
+      "width" : 200
+    }, {
+      "height" : 61,
+      "url" : "https://i.scdn.co/image/1997aa6564c13df2cafff1720c2431f8fa0ea5a8",
+      "width" : 64
+    } ],
+    "name" : "Radical Face",
+    "popularity" : 61,
+    "type" : "artist",
+    "uri" : "spotify:artist:5EM6xJN2QNk0cL7EEm9HR9"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/2LSJrlndCuTpdEluvYHc2E"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 28777
+    },
+    "genres" : [ "chamber pop", "folk-pop", "indie folk", "stomp and flutter", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/2LSJrlndCuTpdEluvYHc2E",
+    "id" : "2LSJrlndCuTpdEluvYHc2E",
+    "images" : [ {
+      "height" : 1269,
+      "url" : "https://i.scdn.co/image/23d4a48f6592c3ddf10bb91b8d4d7f121dfe1935",
+      "width" : 1000
+    }, {
+      "height" : 812,
+      "url" : "https://i.scdn.co/image/f2933e87579df6df2e94edb2017a02a8de73f650",
+      "width" : 640
+    }, {
+      "height" : 254,
+      "url" : "https://i.scdn.co/image/a63e117ec752d4362812bbb671ffb4a32fc618e9",
+      "width" : 200
+    }, {
+      "height" : 81,
+      "url" : "https://i.scdn.co/image/8daa19da6cc93437a75ae557213769abff308127",
+      "width" : 64
+    } ],
+    "name" : "S. Carey",
+    "popularity" : 52,
+    "type" : "artist",
+    "uri" : "spotify:artist:2LSJrlndCuTpdEluvYHc2E"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/2cCUtGK9sDU2EoElnk0GNB"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 564785
+    },
+    "genres" : [ "alternative rock", "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "lo-fi", "neo-psychedelic", "noise pop", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/2cCUtGK9sDU2EoElnk0GNB",
+    "id" : "2cCUtGK9sDU2EoElnk0GNB",
+    "images" : [ {
+      "height" : 1000,
+      "url" : "https://i.scdn.co/image/320174dd023c32ea29e5e11fd5cc7df4c91a3b30",
+      "width" : 1000
+    }, {
+      "height" : 640,
+      "url" : "https://i.scdn.co/image/00124bd035cca0cda910a59a9c614b70a6971193",
+      "width" : 640
+    }, {
+      "height" : 200,
+      "url" : "https://i.scdn.co/image/9ccfff8d1bbf4f75aad9015ed02c7e09acc0376f",
+      "width" : 200
+    }, {
+      "height" : 64,
+      "url" : "https://i.scdn.co/image/d3bcede4069d375649159e4da90fcab4638a19e5",
+      "width" : 64
+    } ],
+    "name" : "The National",
+    "popularity" : 69,
+    "type" : "artist",
+    "uri" : "spotify:artist:2cCUtGK9sDU2EoElnk0GNB"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/79JJCxCCfJ8HufX6w8q2k4"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 68159
+    },
+    "genres" : [ "alternative country", "anti-folk", "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "new americana", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/79JJCxCCfJ8HufX6w8q2k4",
+    "id" : "79JJCxCCfJ8HufX6w8q2k4",
+    "images" : [ {
+      "height" : 667,
+      "url" : "https://i.scdn.co/image/60f7cd9c2c79317a0622a15257876edf929813a4",
+      "width" : 1000
+    }, {
+      "height" : 427,
+      "url" : "https://i.scdn.co/image/df1bebe8494b0ea3aed0b0f9f8f9f2274302d69f",
+      "width" : 640
+    }, {
+      "height" : 133,
+      "url" : "https://i.scdn.co/image/eb0361450ef7f14fd6fb18ce5ef497318103fe20",
+      "width" : 200
+    }, {
+      "height" : 43,
+      "url" : "https://i.scdn.co/image/daf56782a891862fe2a45d78f797286928e518bc",
+      "width" : 64
+    } ],
+    "name" : "Damien Jurado",
+    "popularity" : 60,
+    "type" : "artist",
+    "uri" : "spotify:artist:79JJCxCCfJ8HufX6w8q2k4"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/7FDlvgcodNfC0IBdWevl4u"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 307927
+    },
+    "genres" : [ "folk-pop", "indie folk", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/7FDlvgcodNfC0IBdWevl4u",
+    "id" : "7FDlvgcodNfC0IBdWevl4u",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://i.scdn.co/image/dc197bb2333aad767069532afb2750ab1d796b87",
+      "width" : 640
+    }, {
+      "height" : 320,
+      "url" : "https://i.scdn.co/image/623448153e2f90c0744c25d9bfb1ae4b95a48358",
+      "width" : 320
+    }, {
+      "height" : 160,
+      "url" : "https://i.scdn.co/image/8c852685c6239e9d08b5a150c8d9a12c89959c0e",
+      "width" : 160
+    } ],
+    "name" : "James Vincent McMorrow",
+    "popularity" : 72,
+    "type" : "artist",
+    "uri" : "spotify:artist:7FDlvgcodNfC0IBdWevl4u"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/4tvKz56Tr39bkhcQUTO0Xr"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 461825
+    },
+    "genres" : [ "chamber pop", "folk-pop", "indie folk", "indie pop", "neo mellow", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/4tvKz56Tr39bkhcQUTO0Xr",
+    "id" : "4tvKz56Tr39bkhcQUTO0Xr",
+    "images" : [ {
+      "height" : 615,
+      "url" : "https://i.scdn.co/image/aa975f6d0c4172699399ea10403a91bc6f1759c2",
+      "width" : 616
+    }, {
+      "height" : 200,
+      "url" : "https://i.scdn.co/image/10119743eedf11df770ca39ea64d4cee8ddd3693",
+      "width" : 200
+    }, {
+      "height" : 64,
+      "url" : "https://i.scdn.co/image/324683a80d4f485cc1b828992a45a808cfc4fa68",
+      "width" : 64
+    } ],
+    "name" : "Angus & Julia Stone",
+    "popularity" : 71,
+    "type" : "artist",
+    "uri" : "spotify:artist:4tvKz56Tr39bkhcQUTO0Xr"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/6gAtOqhriLzOzb3Qqmg5kO"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 57269
+    },
+    "genres" : [ "chamber pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/6gAtOqhriLzOzb3Qqmg5kO",
+    "id" : "6gAtOqhriLzOzb3Qqmg5kO",
+    "images" : [ {
+      "height" : 704,
+      "url" : "https://i.scdn.co/image/cc8b1511db745afca2bddc48cc775224244290ef",
+      "width" : 1000
+    }, {
+      "height" : 450,
+      "url" : "https://i.scdn.co/image/08436a80893e4ef7ea03c41aeb2e75f7c37ca759",
+      "width" : 640
+    }, {
+      "height" : 141,
+      "url" : "https://i.scdn.co/image/81e494cbc7e1a7ab42e81b5b2b9412b7cb5a05ea",
+      "width" : 200
+    }, {
+      "height" : 45,
+      "url" : "https://i.scdn.co/image/a1819a55828f8ecfa65fe05fb61e4b0e198e57a7",
+      "width" : 64
+    } ],
+    "name" : "Volcano Choir",
+    "popularity" : 50,
+    "type" : "artist",
+    "uri" : "spotify:artist:6gAtOqhriLzOzb3Qqmg5kO"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/6qiGjRyN7TJ1GA2nXF68Hi"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 93646
+    },
+    "genres" : [ "chamber pop", "folk-pop", "indie folk", "indie pop", "new americana", "portland indie", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/6qiGjRyN7TJ1GA2nXF68Hi",
+    "id" : "6qiGjRyN7TJ1GA2nXF68Hi",
+    "images" : [ {
+      "height" : 667,
+      "url" : "https://i.scdn.co/image/01a5a3d205cf4fc556b16660ce0355e9a1e29fde",
+      "width" : 1000
+    }, {
+      "height" : 427,
+      "url" : "https://i.scdn.co/image/d0304297269e572df8d7c382181fdc4f3b3110f9",
+      "width" : 640
+    }, {
+      "height" : 133,
+      "url" : "https://i.scdn.co/image/a003cf41e0b0007dad99efdae7779100ff1eff3e",
+      "width" : 200
+    }, {
+      "height" : 43,
+      "url" : "https://i.scdn.co/image/0a83b2d5de7f138a81802eb94a35aeabc95d7ceb",
+      "width" : 64
+    } ],
+    "name" : "Blind Pilot",
+    "popularity" : 58,
+    "type" : "artist",
+    "uri" : "spotify:artist:6qiGjRyN7TJ1GA2nXF68Hi"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/0aeLcja6hKzb7Uz2ou7ulP"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 259617
+    },
+    "genres" : [ "anti-folk", "chamber pop", "folk-pop", "indie folk", "indie pop", "indie rock", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/0aeLcja6hKzb7Uz2ou7ulP",
+    "id" : "0aeLcja6hKzb7Uz2ou7ulP",
+    "images" : [ {
+      "height" : 667,
+      "url" : "https://i.scdn.co/image/76ea79b6425f380ffe66f1665881529a15213a5d",
+      "width" : 999
+    }, {
+      "height" : 427,
+      "url" : "https://i.scdn.co/image/1c2dd9d2526a7730b0b1170dfb920361468d16d6",
+      "width" : 640
+    }, {
+      "height" : 133,
+      "url" : "https://i.scdn.co/image/7204290efff13dbb8be63537fea80e25c272a3ae",
+      "width" : 199
+    }, {
+      "height" : 43,
+      "url" : "https://i.scdn.co/image/1bd2842ffbb950ea1f6d2e56ee29c0c8f13d96df",
+      "width" : 64
+    } ],
+    "name" : "Noah And The Whale",
+    "popularity" : 61,
+    "type" : "artist",
+    "uri" : "spotify:artist:0aeLcja6hKzb7Uz2ou7ulP"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/74gcBzlQza1bSfob90yRhR"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 406668
+    },
+    "genres" : [ "folk-pop", "indie folk", "indie pop", "neo mellow", "singer-songwriter", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/74gcBzlQza1bSfob90yRhR",
+    "id" : "74gcBzlQza1bSfob90yRhR",
+    "images" : [ {
+      "height" : 418,
+      "url" : "https://i.scdn.co/image/9013b57d6c1b5de26fca56c41dc25d377ff79260",
+      "width" : 300
+    }, {
+      "height" : 279,
+      "url" : "https://i.scdn.co/image/70ac8702e25570b303485a393f9da799d8ee6102",
+      "width" : 200
+    }, {
+      "height" : 89,
+      "url" : "https://i.scdn.co/image/939548337841823dcf672a7e48fd2792b76799bc",
+      "width" : 64
+    } ],
+    "name" : "City and Colour",
+    "popularity" : 67,
+    "type" : "artist",
+    "uri" : "spotify:artist:74gcBzlQza1bSfob90yRhR"
+  }, {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/2ApaG60P4r0yhBoDCGD8YG"
+    },
+    "followers" : {
+      "href" : null,
+      "total" : 226475
+    },
+    "genres" : [ "alternative rock", "anti-folk", "chamber pop", "dream pop", "folk-pop", "freak folk", "indie folk", "indie pop", "indie rock", "lo-fi", "melancholia", "neo-psychedelic", "singer-songwriter", "slow core", "stomp and holler" ],
+    "href" : "https://api.spotify.com/v1/artists/2ApaG60P4r0yhBoDCGD8YG",
+    "id" : "2ApaG60P4r0yhBoDCGD8YG",
+    "images" : [ {
+      "height" : 543,
+      "url" : "https://i.scdn.co/image/cf6c9a37eed37d368277116a253f0b05b557e9f6",
+      "width" : 827
+    }, {
+      "height" : 420,
+      "url" : "https://i.scdn.co/image/4cfda523bff9476948e0ea8a8651d8541241b396",
+      "width" : 640
+    }, {
+      "height" : 131,
+      "url" : "https://i.scdn.co/image/0e99bf8e04c41c0f94be08893d26ce55061c812f",
+      "width" : 200
+    }, {
+      "height" : 42,
+      "url" : "https://i.scdn.co/image/df8827b5dccf7a1e4b738c87a0d588c10e974a2f",
+      "width" : 64
+    } ],
+    "name" : "Elliott Smith",
+    "popularity" : 64,
+    "type" : "artist",
+    "uri" : "spotify:artist:2ApaG60P4r0yhBoDCGD8YG"
+  } ]
+}
