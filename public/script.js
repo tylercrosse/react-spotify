@@ -20,7 +20,7 @@ class Container extends React.Component{
     this.state = {
       access_token: false,
       refresh_token: false,
-      userData: null,
+      userData: false,
       artistSearched: false,
       artistRes: {}
     }
@@ -90,7 +90,7 @@ class Chart extends React.Component {
   }
   render() {
     return (
-      <div className="d3">D3 goes here</div>
+      <div className="d3"></div>
     )
   }
 }
@@ -141,12 +141,9 @@ class ArtistsList extends React.Component {
   render() {
     return (
       <div>
-        <h3>Artists</h3>
-        <ul>
-          {this.props.results.artists.items.map((artist, index) => (
-            <Artist artistId={(id) => this.getRelatedArtists(id)} artist={artist} key={index} />
-          ))}
-        </ul>
+        {this.props.results.artists.items.map((artist, index) => (
+          <Artist artistId={(id) => this.getRelatedArtists(id)} artist={artist} key={index} />
+        ))}
       </div>
     )
   }
@@ -159,7 +156,7 @@ class Artist extends React.Component {
     return (
       <div key={this.props.artist.id}>
         <p>Name: {this.props.artist.name}</p>
-        {(this.props.artist.images.length > 0) ? <img width="150" src={this.props.artist.images[0].url} alt="profile image" /> : null}
+        {(this.props.artist.images.length > 0) ? <img width="64" src={this.props.artist.images[0].url} alt="profile image" /> : null}
         <button onClick={(e) => this.handleClick(e)}>Get Related Artists</button>
       </div>
     )

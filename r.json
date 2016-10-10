@@ -1,13 +1,5 @@
-const forceData = {
+{
   "nodes": [{
-    "id": "4LEiUm1SRbFMgfqnQTwUbQ",
-    "name": "Bon Iver",
-    "image": {
-      "height": 160,
-      "url":"https://i.scdn.co/image/fb146ca5e799d8feb3040eddfd52464c09cb4f96",
-      "width": 160
-    }
-  }, {
     "id": "4M5nCE77Qaxayuhp3fVn4V",
     "name": "Iron & Wine",
     "image": {
