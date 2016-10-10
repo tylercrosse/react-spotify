@@ -5,19 +5,25 @@
   <title>Express Spotify Oauth</title>
   <style>
 
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
-  stroke-width: 1px;
-}
+  .link line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+    stroke-width: 1px;
+  }
 
-.nodes circle {
-  stroke: #000;
-  stroke-width: 1.5px;
-  fill: rgb(127, 148, 185);
-}
+  .node text {
+    display: none;
+    font: 16px sans-serif;
+    font-weight: bold;
+    fill: #fff;
+    stroke: #000;
+  }
 
-</style>
+  .node:hover text {
+    display: inline;
+  }
+
+  </style>
 </head>
 <body>
   <div id="app"></div>  
