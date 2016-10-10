@@ -19,7 +19,6 @@ const d3Chart = {
       .force('link', d3.forceLink()
         .id((d) => (d.id))
         .distance(nodeSize * 4)
-
       )
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
@@ -29,23 +28,35 @@ const d3Chart = {
       .selectAll('line')
       .data(data.links)
       .enter().append('line')
-      
-    let node = svg
-      .selectAll('.node')
+
+    let node = svg.selectAll('.node')
       .data(data.nodes)
-      .enter()
-      .append('g')
+      .enter().append('g')
       .attr('class', 'node')
       
-    node.append('image')
+    let defs = node.append('defs')
+    
+    defs.append('pattern')
+      .attr('id', (d) => (d.id))
+      .attr('width', nodeSize)
+      .attr('height', nodeSize)
+      .attr('patternUnits', 'userSpaceOnUse')
+      .append('image')
       .attr('xlink:href', (d) => (d.image.url))
-      .attr('x', -8)
-      .attr('y', -8)
-      .attr('width', 32)
-      .attr('height', 32)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', nodeSize)
+      .attr('height', nodeSize)
+      
+    node.append('circle')
+      .attr('cx', nodeSize / 2)
+      .attr('cy', nodeSize / 2)
+      .attr('r', nodeSize / 2)
+      .style('fill', (d) => (`url(#${d.id})`))
 
     node.append('text')
-      .attr('dx', 12)
+      .attr('dx', nodeSize)
+      .attr('dy', (nodeSize / 2) + 4)
       .text((d) => (d.name))
 
     simulation
@@ -63,7 +74,7 @@ const d3Chart = {
         .attr('y2', (d) => (d.target.y));
         
       node
-        .attr('transform', (d) => (`translate(${d.x}, ${d.y})`));
+        .attr('transform', (d) => (`translate(${d.x - (nodeSize / 2)}, ${d.y - (nodeSize / 2)})`));
     }
   }
 }
