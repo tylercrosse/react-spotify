@@ -1,19 +1,3 @@
-// TODO add feature to react
- // document.getElementById('obtain-new-token').addEventListener('click', function() {
-//   $.ajax({
-//     url: '/refresh_token',
-//     data: {
-//       'refresh_token': refresh_token
-//     }
-//   }).done(function(data) {
-//     access_token = data.access_token;
-//     oauthPlaceholder.innerHTML = oauthTemplate({
-//       access_token: access_token,
-//       refresh_token: refresh_token
-//     });
-//   });
-// }, false);
-
 function getHashParams() {
   let hashParams = {};
   let e;
@@ -36,9 +20,10 @@ class Container extends React.Component{
     this.state = {
       access_token: false,
       refresh_token: false,
-      userData: null,
+      userData: false,
       artistSearched: false,
-      artistRes: {}
+      artistRes: {},
+      forceData: false,
     }
   }
   componentWillMount() {
@@ -67,8 +52,29 @@ class Container extends React.Component{
         console.log('Request succesful', json);
         this.setState({
           artistSearched: true,
-          artistRes: json
+          artistRes: json.artists.items
         });
+      })
+      .catch((err) => {console.log('Request failed', err)})
+  }
+  getRelatedArtists(id) {
+    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('Request succesful', json);
+        let nodes = json.artists.map(function(val) {
+          return {"id": val.id, "name": val.name, "image": val.images.pop()}
+        })
+        let links = json.artists.map(function(val) {
+          return {"source": id, "target": val.id}
+        })
+        let source = this.state.artistRes.find((obj) => (obj.id === id))
+        nodes.push({
+          "id": source.id, "name": source.name, "image": source.images.pop()
+        })
+        this.setState({
+          forceData: {"nodes": nodes, "links": links}
+        }) 
       })
       .catch((err) => {console.log('Request failed', err)})
   }
@@ -81,8 +87,32 @@ class Container extends React.Component{
     return (
       <div>
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
-        {this.state.artistSearched ? <ArtistsList results={this.state.artistRes} access_token={this.state.access_token} /> : null}
+        {this.state.artistSearched ? <ArtistsList artistId={(id) => this.getRelatedArtists(id)} results={this.state.artistRes} access_token={this.state.access_token} /> : null}
+        {this.state.forceData ? <Chart forceData={this.state.forceData} /> : null}
       </div>
+    )
+  }
+}
+
+class Chart extends React.Component {
+  componentDidMount() {
+    let el = ReactDOM.findDOMNode(this);
+    d3Chart.create(el, null, this.getChartState())
+  }
+  componentDidUpdate() {
+    let el = ReactDOM.findDOMNode(this);
+    d3Chart.update(el, this.getChartState())
+  }
+  getChartState() {
+    return this.props.forceData
+  }
+  componentWillUnmount() {
+    let el = ReactDOM.findDOMNode(this);
+    d3Chart.destroy(el);
+  }
+  render() {
+    return (
+      <div className="d3"></div>
     )
   }
 }
@@ -121,24 +151,16 @@ class ArtistsList extends React.Component {
       clicked: false
     }
   }
-  getRelatedArtists(id) {
-    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.props.access_token}})
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('Request succesful', json);
-        // state?
-      })
-      .catch((err) => {console.log('Request failed', err)})
+  wonkyPassUp(id) {
+    // TODO replace with event dispatcher or something better
+    this.props.artistId(id)
   }
   render() {
     return (
       <div>
-        <h3>Artists</h3>
-        <ul>
-          {this.props.results.artists.items.map((artist, index) => (
-            <Artist artistId={(id) => this.getRelatedArtists(id)} artist={artist} key={index} />
-          ))}
-        </ul>
+        {this.props.results.map((artist, index) => (
+          <Artist artistId={(id) => this.wonkyPassUp(id)} artist={artist} key={index} />
+        ))}
       </div>
     )
   }
@@ -151,7 +173,7 @@ class Artist extends React.Component {
     return (
       <div key={this.props.artist.id}>
         <p>Name: {this.props.artist.name}</p>
-        {(this.props.artist.images.length > 0) ? <img width="150" src={this.props.artist.images[0].url} alt="profile image" /> : null}
+        {(this.props.artist.images.length > 0) ? <img width="64" src={this.props.artist.images[0].url} alt="profile image" /> : null}
         <button onClick={(e) => this.handleClick(e)}>Get Related Artists</button>
       </div>
     )
@@ -167,48 +189,6 @@ class Login extends React.Component{
     )
   }
 }
-// TODO move to seperate file
-// class LoggedIn extends React.Component{
-//   render() {
-//     return (
-//       <div id="loggedin">
-//         <button id="obtain-new-token">Obtain new token using refresh token</button>
-//       </div>      
-//     )
-//   }
-// }
-// class UserProfile extends React.Component{
-//   render() {
-//     return (
-//       <div>
-//         <h1>Logged in as {this.props.display_name}</h1>
-//         <img width="150" src={this.props.images[0].url} alt="profile image" />
-//         <dl>
-//           <dt>Display Name</dt><dd>{this.props.display_name}</dd>
-//           <dt>Id</dt><dd>{this.props.id}</dd>
-//           <dt>Email</dt><dd>{this.props.email}</dd>
-//           <dt>Spotify URI</dt>
-//           <dd><a href={this.props.external_urls.spotify}>{this.props.external_urls.spotify}</a></dd>
-//           <dt>Link</dt><dd><a href={this.props.href}>{this.props.href}</a></dd>
-//           <dt>Country</dt><dd>{this.props.country}</dd>
-//         </dl>
-//       </div>
-//     )
-//   }
-// }
-// class OauthTemplate extends React.Component{
-//   render() {
-//     return (
-//       <div>
-//         <h2>oAuth info</h2>
-//         <dl>
-//           <dt>Access token</dt><dd>{this.props.access_token}</dd>
-//           <dt>Refresh token</dt><dd>{this.props.refresh_token}</dd>z
-//         </dl>
-//       </div>
-//     )
-//   }
-// }
 
 ReactDOM.render(
   <Container />,
