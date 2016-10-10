@@ -22,7 +22,8 @@ class Container extends React.Component{
       refresh_token: false,
       userData: false,
       artistSearched: false,
-      artistRes: {}
+      artistRes: {},
+      forceData: false,
     }
   }
   componentWillMount() {
@@ -51,8 +52,29 @@ class Container extends React.Component{
         console.log('Request succesful', json);
         this.setState({
           artistSearched: true,
-          artistRes: json
+          artistRes: json.artists.items
         });
+      })
+      .catch((err) => {console.log('Request failed', err)})
+  }
+  getRelatedArtists(id) {
+    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('Request succesful', json);
+        let nodes = json.artists.map(function(val) {
+          return {"id": val.id, "name": val.name, "image": val.images.pop()}
+        })
+        let links = json.artists.map(function(val) {
+          return {"source": id, "target": val.id}
+        })
+        let source = this.state.artistRes.find((obj) => (obj.id === id))
+        nodes.push({
+          "id": source.id, "name": source.name, "image": source.images.pop()
+        })
+        this.setState({
+          forceData: {"nodes": nodes, "links": links}
+        }) 
       })
       .catch((err) => {console.log('Request failed', err)})
   }
@@ -65,8 +87,8 @@ class Container extends React.Component{
     return (
       <div>
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
-        {this.state.artistSearched ? <ArtistsList results={this.state.artistRes} access_token={this.state.access_token} /> : null}
-        <Chart />
+        {this.state.artistSearched ? <ArtistsList artistId={(id) => this.getRelatedArtists(id)} results={this.state.artistRes} access_token={this.state.access_token} /> : null}
+        {this.state.forceData ? <Chart forceData={this.state.forceData} /> : null}
       </div>
     )
   }
@@ -82,7 +104,7 @@ class Chart extends React.Component {
     d3Chart.update(el, this.getChartState())
   }
   getChartState() {
-    return forceData
+    return this.props.forceData
   }
   componentWillUnmount() {
     let el = ReactDOM.findDOMNode(this);
@@ -129,20 +151,15 @@ class ArtistsList extends React.Component {
       clicked: false
     }
   }
-  getRelatedArtists(id) {
-    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.props.access_token}})
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('Request succesful', json);
-        // state?
-      })
-      .catch((err) => {console.log('Request failed', err)})
+  wonkyPassUp(id) {
+    // TODO replace with event dispatcher or something better
+    this.props.artistId(id)
   }
   render() {
     return (
       <div>
-        {this.props.results.artists.items.map((artist, index) => (
-          <Artist artistId={(id) => this.getRelatedArtists(id)} artist={artist} key={index} />
+        {this.props.results.map((artist, index) => (
+          <Artist artistId={(id) => this.wonkyPassUp(id)} artist={artist} key={index} />
         ))}
       </div>
     )
