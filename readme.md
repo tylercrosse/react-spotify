@@ -1,3 +1,13 @@
+##
+
+D3 + React Front End
+Express backend
+Webpack as the build tool
+
+I learned a lot from:
+- [Example D3 React Integration](https://github.com/nicolashery/example-d3-react)
+- [Webpack Express Boilerplate](https://github.com/christianalfoni/webpack-express-boilerplate)
+
 ## Startup
 
 ```sh
