@@ -1,0 +1,17 @@
+.link line {
+  stroke: #999;
+  stroke-opacity: 0.6;
+  stroke-width: 1px;
+}
+
+.node text {
+  display: none;
+  font: 16px sans-serif;
+  font-weight: bold;
+  fill: #fff;
+  stroke: #000;
+}
+
+.node:hover text {
+  display: inline;
+}

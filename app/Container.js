@@ -1,3 +1,9 @@
+import React from 'react';
+import Login from './Login.js';
+import ArtistSearch from './ArtistSearch.js'
+import ArtistsList from './ArtistsList.js'
+import Chart from './Chart.js'
+
 function getHashParams() {
   let hashParams = {};
   let e;
@@ -94,103 +100,4 @@ class Container extends React.Component{
   }
 }
 
-class Chart extends React.Component {
-  componentDidMount() {
-    let el = ReactDOM.findDOMNode(this);
-    d3Chart.create(el, null, this.getChartState())
-  }
-  componentDidUpdate() {
-    let el = ReactDOM.findDOMNode(this);
-    d3Chart.update(el, this.getChartState())
-  }
-  getChartState() {
-    return this.props.forceData
-  }
-  componentWillUnmount() {
-    let el = ReactDOM.findDOMNode(this);
-    d3Chart.destroy(el);
-  }
-  render() {
-    return (
-      <div className="d3"></div>
-    )
-  }
-}
-
-class ArtistSearch extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      artistSearch: ''
-    }
-  }
-  updateNewSearch(e) {
-    this.setState({
-      artistSearch: e.target.value
-    });
-  }
-  handleArtistSearch() {
-    this.props.newSearch(this.state.artistSearch);
-    this.setState({
-      artistSearch: ''
-    })
-  }
-  render() {
-    return (
-      <div>
-        <input type="text" value={this.state.artistSearch} onChange= {(e) => this.updateNewSearch(e)} />
-        <button onClick={(e) => this.handleArtistSearch(e)}>Search Artists</button>
-      </div>
-    )
-  }
-}
-class ArtistsList extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      clicked: false
-    }
-  }
-  wonkyPassUp(id) {
-    // TODO replace with event dispatcher or something better
-    this.props.artistId(id)
-  }
-  render() {
-    return (
-      <div>
-        {this.props.results.map((artist, index) => (
-          <Artist artistId={(id) => this.wonkyPassUp(id)} artist={artist} key={index} />
-        ))}
-      </div>
-    )
-  }
-}
-class Artist extends React.Component {
-  handleClick(e) {
-    this.props.artistId(this.props.artist.id);
-  }
-  render() {
-    return (
-      <div key={this.props.artist.id}>
-        <p>Name: {this.props.artist.name}</p>
-        {(this.props.artist.images.length > 0) ? <img width="64" src={this.props.artist.images[0].url} alt="profile image" /> : null}
-        <button onClick={(e) => this.handleClick(e)}>Get Related Artists</button>
-      </div>
-    )
-  }
-}
-class Login extends React.Component{
-  render() {
-    return (
-      <div id="login">
-        <h1>Test of Auth Code</h1>
-        <a href="/login">Log in with Spotify</a>
-      </div>
-    )
-  }
-}
-
-ReactDOM.render(
-  <Container />,
-  document.getElementById('app')
-);
+export default Container

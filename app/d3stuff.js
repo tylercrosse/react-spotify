@@ -1,4 +1,6 @@
-const d3Chart = {
+import * as d3 from 'd3'
+
+export const d3Chart = {
   create(el, props, state) {
     let svg = d3.select(el).append('svg')
       .attr('width', 480)
