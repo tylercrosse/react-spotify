@@ -1,7 +1,7 @@
 import React from 'react';
 import Artist from './Artist.js';
 
-class ArtistsList extends React.Component {
+export default class ArtistsList extends React.Component {
   constructor() {
     super()
     this.state = {

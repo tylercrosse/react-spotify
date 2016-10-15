@@ -10,6 +10,8 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
+app.use('/', routes);
+
 if (isDeveloping) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
@@ -38,7 +40,6 @@ if (isDeveloping) {
   });
 }
 
-app.use('/', routes);
 
 app.listen(port, '0.0.0.0', function onStart(err) {
   if (err) {

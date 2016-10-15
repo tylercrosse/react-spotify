@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './Login.js';
 import ArtistSearch from './ArtistSearch.js'
-import ArtistList from './ArtistList.js'
+import ArtistsList from './ArtistsList.js'
 import Chart from './Chart.js'
 
 function getHashParams() {
@@ -41,15 +41,15 @@ class Container extends React.Component{
     })
   }
   componentDidMount() {
-    // fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     console.log('Request succesful', json);
-    //     this.setState({
-    //       userData: json
-    //     });
-    //   })
-    //   .catch((err) => {console.log('Request failed', err)})
+    fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('Request succesful', json);
+        this.setState({
+          userData: json
+        });
+      })
+      .catch((err) => {console.log('Request failed', err)})
   }
   artistSearchResults(search) {
     fetch(`https://api.spotify.com/v1/search?q=${fixedEncodeURIComponent(search)}&type=artist`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})

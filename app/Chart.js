@@ -1,5 +1,6 @@
 import React from 'react';
-import d3Stuff from './d3Stuff.js'
+import ReactDOM from 'react-dom';
+import { d3Chart } from './d3Stuff.js'
 
 export default class Chart extends React.Component {
   componentDidMount() {
