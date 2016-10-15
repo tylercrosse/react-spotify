@@ -26,10 +26,11 @@ class Container extends React.Component{
     this.state = {
       access_token: false,
       refresh_token: false,
-      userData: false,
+      userData: null,
       artistSearched: false,
       artistRes: {},
-      forceData: false,
+      forceData: null,
+      activeNode: null,
     }
   }
   componentWillMount() {
@@ -84,6 +85,9 @@ class Container extends React.Component{
       })
       .catch((err) => {console.log('Request failed', err)})
   }
+  setAppState(partialState, cb) {
+    return this.setState(partialState, cb);
+  }
   render() {
     if (!this.state.userData) {
       return (
@@ -94,7 +98,7 @@ class Container extends React.Component{
       <div>
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
         {this.state.artistSearched ? <ArtistsList artistId={(id) => this.getRelatedArtists(id)} results={this.state.artistRes} access_token={this.state.access_token} /> : null}
-        {this.state.forceData ? <Chart forceData={this.state.forceData} /> : null}
+        {this.state.forceData ? <Chart forceData={this.state.forceData} setAppState={(partialState, cb) => this.setAppState(partialState, cb)} /> : null}
       </div>
     )
   }

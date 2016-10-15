@@ -1,4 +1,5 @@
-import * as d3 from 'd3'
+import EventEmitter from 'events';
+import * as d3 from 'd3';
 
 export const d3Chart = {
   create(el, props, state) {
@@ -6,13 +7,16 @@ export const d3Chart = {
       .attr('width', 480)
       .attr('height', 480);
       
-    this._drawD3(el, state);
+    let dispatcher = new EventEmitter();
+    this._drawForceLay(el, state, dispatcher);
+    
+    return dispatcher;
   },
-  update(el, state) {
-    this._drawD3(el, state);
+  update(el, state, dispatcher) {
+    this._drawForceLay(el, state, dispatcher);
   },
   destroy(el) {},
-  _drawD3(el, data) {
+  _drawForceLay(el, data, dispatcher) {
     let svg = d3.select(el).selectAll('svg')
     let width = +svg.attr('width')
     let height = +svg.attr('height')
@@ -35,6 +39,12 @@ export const d3Chart = {
       .data(data.nodes)
       .enter().append('g')
       .attr('class', 'node')
+      .on('dblclick', (d) => {dispatcher.emit('node:dblclick', d)})
+      .call(d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended)
+      )
       
     let defs = node.append('defs')
     
@@ -78,5 +88,23 @@ export const d3Chart = {
       node
         .attr('transform', (d) => (`translate(${d.x - (nodeSize / 2)}, ${d.y - (nodeSize / 2)})`));
     }
+    
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
   }
 }
+
