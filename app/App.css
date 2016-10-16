@@ -1,4 +1,8 @@
-.link line {
+body {
+  background-color: #ddd;
+}
+
+.link {
   stroke: #999;
   stroke-opacity: 0.6;
   stroke-width: 1px;

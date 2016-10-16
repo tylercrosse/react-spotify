@@ -29,22 +29,24 @@ export const d3Chart = {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
       
-    let link = svg.append('g')
-      .attr('class', 'link')
-      .selectAll('line')
+    let link = svg.selectAll('.link')
       .data(data.links)
       .enter().append('line')
+      .attr('class', 'link')
 
     let node = svg.selectAll('.node')
       .data(data.nodes)
       .enter().append('g')
       .attr('class', 'node')
-      .on('dblclick', (d) => {dispatcher.emit('node:dblclick', d)})
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended)
       )
+      .on('dblclick', (d) => {
+        console.log('dblclicked')
+        dispatcher.emit('node:dblclick', d)
+      })
       
     let defs = node.append('defs')
     
@@ -83,14 +85,15 @@ export const d3Chart = {
         .attr('x1', (d) => (d.source.x))
         .attr('y1', (d) => (d.source.y))
         .attr('x2', (d) => (d.target.x))
-        .attr('y2', (d) => (d.target.y));
+        .attr('y2', (d) => (d.target.y))
         
       node
-        .attr('transform', (d) => (`translate(${d.x - (nodeSize / 2)}, ${d.y - (nodeSize / 2)})`));
+        .attr('transform', (d) => (`translate(${d.x - (nodeSize / 2)}, ${d.y - (nodeSize / 2)})`))
     }
     
     function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      console.log('dragged')
       d.fx = d.x;
       d.fy = d.y;
     }

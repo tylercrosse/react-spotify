@@ -8,7 +8,6 @@ export default class Chart extends React.Component {
     let dispatcher = d3Chart.create(el, null, this.getChartState())
     
     dispatcher.on('node:dblclick', this.nodeDblClick.bind(this));
-    dispatcher.on('node:click', this.nodeClick.bind(this));
     this.dispatcher = dispatcher
   }
   componentDidUpdate() {
@@ -22,12 +21,9 @@ export default class Chart extends React.Component {
     let el = ReactDOM.findDOMNode(this);
     d3Chart.destroy(el);
   }
-  nodeClick() {
-    this.props.setAppState({tooltip: null});
-  }
   nodeDblClick(d) {
     console.log(d)
-    this.props.setAppState({tooltip: d});
+    this.props.setAppState({activeNode: d});
   }
   render() {
     return (
