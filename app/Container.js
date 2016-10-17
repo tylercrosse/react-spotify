@@ -68,12 +68,11 @@ class Container extends React.Component{
     fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
       .then((res) => res.json())
       .then((json) => {
-        let trimRes = json.artists.splice(0, Math.floor(json.artists.length / 2))
-        console.log('Request succesful', trimRes);
-        let newNodes = trimRes.map((val) => (
+        console.log('Request succesful', json);
+        let newNodes = json.artists.map((val) => (
           {"id": val.id, "cluster": id, "name": val.name, "image": val.images.pop()}
         ))
-        let newLinks = trimRes.map((val) => (
+        let newLinks = json.artists.map((val) => (
           {"source": id, "target": val.id}
         ))
         if (!this.state.forceData) {
@@ -120,7 +119,7 @@ class Container extends React.Component{
           return dups
         }
       })
-      .catch((err) => {console.log('Request failed', err)})
+      // .catch((err) => {console.log('Request failed', err)})
   }
   d3related(partialState, cb) {
     this.getRelatedArtists(partialState.activeNode.id)

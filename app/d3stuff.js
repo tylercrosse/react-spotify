@@ -6,11 +6,12 @@ export const d3Chart = {
     let svg = d3.select(el).append('svg')
       .attr('width', 800)
       .attr('height', 600);
-      
-    svg.append('g')
+    let g = svg.append('g')
+    
+    g.append('g')
       .attr('class', 'links')
       
-    svg.append('g')
+    g.append('g')
       .attr('class', 'nodes')
       
     let dispatcher = new EventEmitter();
@@ -27,21 +28,35 @@ export const d3Chart = {
     let width = +svg.attr('width')
     let height = +svg.attr('height')
     let nodeSize = 16
-    let simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((d) => (d.id)))
-      // .force('charge', d3.forceManyBody())
-      .force('center', d3.forceCenter(width / 2, height / 2));
-      // .force('collide',)
-      // .distance(nodeSize * 4)
-      // .strength(nodeSize * -4)
+    let transform = d3.zoomIdentity
+    let simulation = d3.forceSimulation(data.nodes)
+      .force('charge', d3.forceManyBody()
+        .strength(-100)
+      )
+      .force('link', d3.forceLink(data.links)
+        .id((d) => (d.id))
+        .distance(20)
+        .strength(1)
+      )
+      .force('x', d3.forceX())
+      .force('y', d3.forceY())
       
-    let link = svg.select('.links')
+    svg
+      .call(d3.zoom()
+        .scaleExtent([1 / 2, 8])
+        .on("zoom", zoomed)
+      )
+      .on('dblclick.zoom', null)
+    
+    let g = svg.select('g')
+      
+    let link = g.select('.links')
       .selectAll('.link')
       .data(data.links)
       .enter().append('line')
       .attr('class', 'link')
 
-    let node = svg.select('.nodes')
+    let node = g.select('.nodes')
       .selectAll('.node')
       .data(data.nodes)
       .enter().append('g')
@@ -52,7 +67,7 @@ export const d3Chart = {
         .on('end', dragended)
       )
       .on('dblclick', (d) => {
-        console.log('dblclicked')
+        console.log('dblclicked', d)
         dispatcher.emit('node:dblclick', d)
       })
       
@@ -96,27 +111,28 @@ export const d3Chart = {
 
     function ticked() {
       link
-        .attr('x1', (d) => (d.source.x))
-        .attr('y1', (d) => (d.source.y))
-        .attr('x2', (d) => (d.target.x))
-        .attr('y2', (d) => (d.target.y))
+        .attr('x1', (d) => (d.source.x + (width / 2)))
+        .attr('y1', (d) => (d.source.y + (height / 2)))
+        .attr('x2', (d) => (d.target.x + (width / 2)))
+        .attr('y2', (d) => (d.target.y + (height / 2)))
         
       node
-        .attr('transform', (d) => (`translate(${d.x - (nodeSize / 2)}, ${d.y - (nodeSize / 2)})`))
+        .attr('transform', (d) => (`translate(${d.x - (nodeSize / 2) + (width / 2)}, ${d.y - (nodeSize / 2) + (height / 2)})`))
     }
-    
+    function zoomed() {
+      g.attr('transform', d3.event.transform);
+    }
     function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       console.log('dragged')
       d.fx = d.x;
       d.fy = d.y;
     }
-
     function dragged(d) {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
+      ticked()
     }
-
     function dragended(d) {
       if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = null;
@@ -124,4 +140,3 @@ export const d3Chart = {
     }
   }
 }
-
