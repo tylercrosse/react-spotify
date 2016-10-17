@@ -26,10 +26,11 @@ class Container extends React.Component{
     this.state = {
       access_token: false,
       refresh_token: false,
-      userData: false,
+      userData: null,
       artistSearched: false,
       artistRes: {},
-      forceData: false,
+      forceData: null,
+      activeNode: null,
     }
   }
   componentWillMount() {
@@ -68,21 +69,61 @@ class Container extends React.Component{
       .then((res) => res.json())
       .then((json) => {
         console.log('Request succesful', json);
-        let nodes = json.artists.map(function(val) {
-          return {"id": val.id, "name": val.name, "image": val.images.pop()}
-        })
-        let links = json.artists.map(function(val) {
-          return {"source": id, "target": val.id}
-        })
-        let source = this.state.artistRes.find((obj) => (obj.id === id))
-        nodes.push({
-          "id": source.id, "name": source.name, "image": source.images.pop()
-        })
-        this.setState({
-          forceData: {"nodes": nodes, "links": links}
-        }) 
+        let newNodes = json.artists.map((val) => (
+          {"id": val.id, "cluster": id, "name": val.name, "image": val.images.pop()}
+        ))
+        let newLinks = json.artists.map((val) => (
+          {"source": id, "target": val.id}
+        ))
+        if (!this.state.forceData) {
+          // no old data
+          let source = this.state.artistRes.find((obj) => (obj.id === id))
+          newNodes.push({
+            "id": source.id, "name": source.name, "image": source.images.pop()
+          })
+          return this.setState({
+            forceData: {"nodes": newNodes, "links": newLinks}
+          }) 
+        } else { 
+          // add to exiisting data
+          let newUniqNodes = uniq(this.state.forceData.nodes, newNodes, 'id')
+          let nodesUnion = this.state.forceData.nodes.concat(newUniqNodes)
+          let newUniqLinks = newUniqNodes.map((val) => (
+            {"source": id, "target": val.id}
+          ))
+          let newDupNodes = dups(this.state.forceData.nodes, newNodes, 'id')
+          console.log(newDupNodes)
+          let newDupLinks = newDupNodes.map((val) => (
+            {"source": id, "target": val.id}
+          ))
+          let linksConcat = this.state.forceData.links.concat(newUniqLinks, newDupLinks)
+          this.setState({
+            forceData: {"nodes": nodesUnion, "links": linksConcat}
+          }) 
+        }
+        function uniq(arr1, arr2, prop) {
+          for (let i=0; i<arr1.length; i++) {
+            for (let j=0; j<arr2.length; j++) {
+              if (arr1[i][prop] === arr2[j][prop]) arr2.splice(j, 1);
+            }
+          }
+          return arr2
+        }
+        function dups(arr1, arr2, prop) {
+          let dups = []
+          for (let i=0; i<arr1.length; i++) {
+            for (let j=0; j<arr2.length; j++) {
+              if (arr1[i][prop] === arr2[j][prop]) dups.push(arr2.splice(j, 1));
+            }
+          }
+          return dups
+        }
       })
-      .catch((err) => {console.log('Request failed', err)})
+      // .catch((err) => {console.log('Request failed', err)})
+  }
+  d3related(partialState, cb) {
+    this.getRelatedArtists(partialState.activeNode.id)
+    return this.setState(partialState, cb);
   }
   render() {
     if (!this.state.userData) {
@@ -94,7 +135,7 @@ class Container extends React.Component{
       <div>
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
         {this.state.artistSearched ? <ArtistsList artistId={(id) => this.getRelatedArtists(id)} results={this.state.artistRes} access_token={this.state.access_token} /> : null}
-        {this.state.forceData ? <Chart forceData={this.state.forceData} /> : null}
+        {this.state.forceData ? <Chart forceData={this.state.forceData} d3related={(partialState, cb) => this.d3related(partialState, cb)} /> : null}
       </div>
     )
   }
