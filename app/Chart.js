@@ -23,7 +23,7 @@ export default class Chart extends React.Component {
   }
   nodeDblClick(d) {
     console.log(d)
-    this.props.setAppState({activeNode: d});
+    this.props.d3related({activeNode: d});
   }
   render() {
     return (

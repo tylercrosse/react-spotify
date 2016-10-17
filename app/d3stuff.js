@@ -4,8 +4,14 @@ import * as d3 from 'd3';
 export const d3Chart = {
   create(el, props, state) {
     let svg = d3.select(el).append('svg')
-      .attr('width', 480)
-      .attr('height', 480);
+      .attr('width', 800)
+      .attr('height', 600);
+      
+    svg.append('g')
+      .attr('class', 'links')
+      
+    svg.append('g')
+      .attr('class', 'nodes')
       
     let dispatcher = new EventEmitter();
     this._drawForceLay(el, state, dispatcher);
@@ -20,21 +26,23 @@ export const d3Chart = {
     let svg = d3.select(el).selectAll('svg')
     let width = +svg.attr('width')
     let height = +svg.attr('height')
-    let nodeSize = 32
+    let nodeSize = 16
     let simulation = d3.forceSimulation()
-      .force('link', d3.forceLink()
-        .id((d) => (d.id))
-        .distance(nodeSize * 4)
-      )
-      .force('charge', d3.forceManyBody())
+      .force('link', d3.forceLink().id((d) => (d.id)))
+      // .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
+      // .force('collide',)
+      // .distance(nodeSize * 4)
+      // .strength(nodeSize * -4)
       
-    let link = svg.selectAll('.link')
+    let link = svg.select('.links')
+      .selectAll('.link')
       .data(data.links)
       .enter().append('line')
       .attr('class', 'link')
 
-    let node = svg.selectAll('.node')
+    let node = svg.select('.nodes')
+      .selectAll('.node')
       .data(data.nodes)
       .enter().append('g')
       .attr('class', 'node')
@@ -79,6 +87,12 @@ export const d3Chart = {
 
     simulation.force('link')
       .links(data.links);
+      
+    node.exit()
+      .remove()
+      
+    link.exit()
+      .remove()
 
     function ticked() {
       link
