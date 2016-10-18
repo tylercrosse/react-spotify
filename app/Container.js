@@ -20,6 +20,8 @@ function fixedEncodeURIComponent(str) {
   });
 }
 
+let index = 0;
+
 class Container extends React.Component{
   constructor() {
     super();
@@ -65,60 +67,110 @@ class Container extends React.Component{
       .catch((err) => {console.log('Request failed', err)})
   }
   getRelatedArtists(id) {
-    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('Request succesful', json);
-        let newNodes = json.artists.map((val) => (
-          {"id": val.id, "cluster": id, "name": val.name, "image": val.images.pop()}
-        ))
-        let newLinks = json.artists.map((val) => (
-          {"source": id, "target": val.id}
-        ))
+
+    const opts = {
+      headers: {
+        'Authorization': 'Bearer ' + this.state.access_token
+      }
+    };
+
+    return fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, opts)
+      .then(res => res.json())
+      .then(json => {
+
+        let newNodes = json.artists.map(val => ({
+          index: index++,
+          id: val.id,
+          cluster: id,
+          name: val.name,
+          image: val.images.pop()
+        }));
+
+        let newLinks = json.artists.map(val => ({
+          index: index++,
+          source: id,
+          target: val.id
+        }));
+
+
         if (!this.state.forceData) {
           // no old data
-          let source = this.state.artistRes.find((obj) => (obj.id === id))
+          let source = this.state.artistRes.find(obj => obj.id === id);
+
           newNodes.push({
-            "id": source.id, "name": source.name, "image": source.images.pop()
-          })
-          return this.setState({
-            forceData: {"nodes": newNodes, "links": newLinks}
-          }) 
-        } else { 
-          // add to exiisting data
-          let newUniqNodes = uniq(this.state.forceData.nodes, newNodes, 'id')
-          let nodesUnion = this.state.forceData.nodes.concat(newUniqNodes)
-          let newUniqLinks = newUniqNodes.map((val) => (
-            {"source": id, "target": val.id}
-          ))
-          let newDupNodes = dups(this.state.forceData.nodes, newNodes, 'id')
-          console.log(newDupNodes)
-          let newDupLinks = newDupNodes.map((val) => (
-            {"source": id, "target": val.id}
-          ))
-          let linksConcat = this.state.forceData.links.concat(newUniqLinks, newDupLinks)
-          this.setState({
-            forceData: {"nodes": nodesUnion, "links": linksConcat}
-          }) 
-        }
-        function uniq(arr1, arr2, prop) {
-          for (let i=0; i<arr1.length; i++) {
-            for (let j=0; j<arr2.length; j++) {
-              if (arr1[i][prop] === arr2[j][prop]) arr2.splice(j, 1);
+            id: source.id,
+            name: source.name,
+            image: source.images.pop()
+          });
+
+          const newState = {
+            forceData: {
+              nodes: newNodes,
+              links: newLinks
             }
+          };
+
+          return this.setState(newState);
+
+        } else {
+
+          const allNodes = this.state.forceData.nodes.reduce((acc, node) => {
+            acc[node.id] = node;
+            return acc;
+          }, {});
+
+          for (let node of newNodes) {
+            allNodes[node.id] = allNodes[node.id] || node;
           }
-          return arr2
-        }
-        function dups(arr1, arr2, prop) {
-          let dups = []
-          for (let i=0; i<arr1.length; i++) {
-            for (let j=0; j<arr2.length; j++) {
-              if (arr1[i][prop] === arr2[j][prop]) dups.push(arr2.splice(j, 1));
+
+
+          console.log('existingLinks', this.state.forceData.links);
+
+          // Old AND new nodes are all in `allNodes`
+          const allLinks = this.state.forceData.links
+            .map(n => ({
+              source: n.source.id,
+              target: n.target.id
+            }))
+            .reduce((acc, link) => {
+              acc[link.source + ':' + link.target] = link;
+              return acc;
+            }, {});
+
+
+          for (let link of newLinks) {
+
+            const key = `${link.source}:${link.target}`;
+
+            allLinks[key] = allLinks[key] || link;
+          }
+
+          // All links are in `allLinks`;
+
+          var newData = {
+            forceData: {
+              nodes: values(allNodes).map(Node),
+              links: values(allLinks).map(Link)
             }
-          }
-          return dups
+          };
+
+          this.setState(newData);
+
         }
-      })
+
+        function Node({ index, id, cluster, name, image }) {
+          return { index, id, cluster, name, image };
+        }
+
+        function Link({ index, source, target }) {
+          return { index, source, target };
+        }
+
+        function values(object) {
+          return Object.keys(object).map(key => object[key]);
+        }
+
+      });
       // .catch((err) => {console.log('Request failed', err)})
   }
   d3related(partialState, cb) {
