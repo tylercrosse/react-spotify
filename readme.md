@@ -23,6 +23,6 @@ npm start
 export const secrets = {
   client_id: 'your client_id',
   client_secret: 'your client_secret',
-  redirect_uri: 'http://localhost:8888/callback'
+  redirect_uri: 'http://0.0.0.0:3000/callbackk'
 };
 ```
