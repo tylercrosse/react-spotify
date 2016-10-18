@@ -2,10 +2,18 @@ import express from 'express';
 import request from 'request';
 import querystring from 'querystring';
 // import cookieParser from 'cookie-parser';
-import { secrets } from '../secrets.js';
 
 const stateKey = 'spotify_auth_state';
 const routes = express.Router();
+let env = {};
+
+if(process.env.NODE_ENV !== 'production'){
+  env = require('../env.json');
+  // process.env.session_secret = env.session_secret;
+  process.env.s_client_id = env.s_client_id;
+  process.env.s_client_secret = env.s_client_secret;
+  process.env.s_redirect_uri = env.s_redirect_uri;
+}
 
 function generateRandomString(length) {
   let text = '';
@@ -28,9 +36,9 @@ routes.get('/login', (req, res) => {
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: secrets.client_id,
+      client_id: process.env.s_client_id,
       scope: scope,
-      redirect_uri: secrets.redirect_uri,
+      redirect_uri: process.env.s_redirect_uri,
       state: state
     }));
 });
@@ -52,11 +60,11 @@ routes.get('/callback', (req, res) => {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: secrets.redirect_uri,
+        redirect_uri: process.env.s_redirect_uri,
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(secrets.client_id + ':' + secrets.client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(process.env.s_client_id + ':' + process.env.s_client_secret).toString('base64'))
       },
       json: true
     };
@@ -96,7 +104,7 @@ routes.get('/refresh_token', (req, res) => {
   let refresh_token = req.query.refresh_token;
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: {'Authorization': 'Basic ' + (new Buffer(secrets.client_id + ':' + secrets.client_secret).toString('base64'))},
+    headers: {'Authorization': 'Basic ' + (new Buffer(process.env.s_client_id + ':' + process.env.s_client_secret).toString('base64'))},
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token

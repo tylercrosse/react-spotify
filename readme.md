@@ -12,17 +12,16 @@ I learned a lot from:
 
 ```sh
 npm install
-touch secrets.js
-# edit secrets.js with spotify info as below
+touch server/env.json
+# edit env.json with spotify info as below
 npm start
 ```
 
-> secrets.js
-
+in `server/env.json`:
 ```js
-export const secrets = {
-  client_id: 'your client_id',
-  client_secret: 'your client_secret',
-  redirect_uri: 'http://localhost:8888/callback'
+{
+  "s_client_id": "your client_id",
+  "s_client_secret": "your client_secret",
+  "s_redirect_uri": "http://localhost:8888/callback"
 };
 ```

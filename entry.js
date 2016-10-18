@@ -1,4 +1,4 @@
 require('babel-register')({
   presets: ['latest']
 });
-require('./server.js');
+require('./server/server.js');

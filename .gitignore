@@ -1,3 +1,5 @@
 dist/
+compiled/
 node_modules
 secrets.js
+env.json

@@ -24,7 +24,7 @@ module.exports = {
       inject: 'body',
       filename: 'index.html'
     }),
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('[name]-[hash].min.css'),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false,
@@ -52,7 +52,7 @@ module.exports = {
       loader: 'json'
     }, {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("style-loader", ["css-loader", "postcss-loader", "sass-loader"])
+        loader: ExtractTextPlugin.extract("css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!sass-loader")
     }]
   },
   postcss: function() {
