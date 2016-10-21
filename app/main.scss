@@ -3,7 +3,7 @@ body {
 }
 
 .link {
-  stroke: #999;
+  stroke: #fff;
   stroke-opacity: 0.6;
   stroke-width: 1px;
 }
@@ -14,6 +14,12 @@ body {
   font-weight: bold;
   fill: #fff;
   stroke: #000;
+}
+
+.node:hover circle {
+  stroke: #fff;
+  stroke-opacity: 0.8;
+  stroke-width: 1px;
 }
 
 .node:hover text {

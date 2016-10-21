@@ -44,7 +44,7 @@ export const d3Chart = {
     svg
       .call(d3.zoom()
         .scaleExtent([1 / 2, 8])
-        .on("zoom", zoomed)
+        .on('zoom', zoomed)
       )
       .on('dblclick.zoom', null)
     
@@ -80,11 +80,30 @@ export const d3Chart = {
       .attr('patternUnits', 'userSpaceOnUse')
       .append('image')
       .attr('xlink:href', (d) => (d.image.url))
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', nodeSize)
-      .attr('height', nodeSize)
+      .each(makeRound)
+
       
+    function makeRound(selection) {
+      let w = 0;
+      let h = 0;
+      let dx = 0;
+      let dy = 0;
+      
+      d3.select(this)
+        .attr('width', (d) => {
+          w = d.image.width
+          h = d.image.height
+          dx = Math.max(nodeSize, nodeSize * (w/h) )
+          return dx
+        })
+        .attr('height', (d) => {
+          dy = Math.max(nodeSize, nodeSize * (h/w) )
+          return dy
+        })
+        .attr('x', (d) => ( -(dx - nodeSize)/2 ))
+        .attr('y', (d) => ( -(dy - nodeSize)/2 ))
+    }  
+
     node.append('circle')
       .attr('cx', nodeSize / 2)
       .attr('cy', nodeSize / 2)
@@ -133,7 +152,7 @@ export const d3Chart = {
       d.fy = d3.event.y;
     }
     function dragended(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) simulation.alphaTarget(0.0).restart();
       d.fx = null;
       d.fy = null;
     }
