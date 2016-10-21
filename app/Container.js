@@ -67,17 +67,14 @@ class Container extends React.Component{
       .catch((err) => {console.log('Request failed', err)})
   }
   getRelatedArtists(id) {
-
     const opts = {
       headers: {
         'Authorization': 'Bearer ' + this.state.access_token
       }
     };
-
     return fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, opts)
       .then(res => res.json())
       .then(json => {
-
         let newNodes = json.artists.map(val => ({
           index: index++,
           id: val.id,
@@ -85,13 +82,11 @@ class Container extends React.Component{
           name: val.name,
           image: val.images.pop()
         }));
-
         let newLinks = json.artists.map(val => ({
           index: index++,
           source: id,
           target: val.id
         }));
-
 
         if (!this.state.forceData) {
           // no old data
@@ -109,11 +104,9 @@ class Container extends React.Component{
               links: newLinks
             }
           };
-
           return this.setState(newState);
 
         } else {
-
           const allNodes = this.state.forceData.nodes.reduce((acc, node) => {
             acc[node.id] = node;
             return acc;
@@ -122,10 +115,6 @@ class Container extends React.Component{
           for (let node of newNodes) {
             allNodes[node.id] = allNodes[node.id] || node;
           }
-
-
-          console.log('existingLinks', this.state.forceData.links);
-
           // Old AND new nodes are all in `allNodes`
           const allLinks = this.state.forceData.links
             .map(n => ({
@@ -137,41 +126,32 @@ class Container extends React.Component{
               return acc;
             }, {});
 
-
           for (let link of newLinks) {
-
             const key = `${link.source}:${link.target}`;
-
             allLinks[key] = allLinks[key] || link;
           }
 
           // All links are in `allLinks`;
-
           var newData = {
             forceData: {
               nodes: values(allNodes).map(Node),
               links: values(allLinks).map(Link)
             }
           };
-
           this.setState(newData);
-
         }
-
+        
         function Node({ index, id, cluster, name, image }) {
           return { index, id, cluster, name, image };
         }
-
         function Link({ index, source, target }) {
           return { index, source, target };
         }
-
         function values(object) {
           return Object.keys(object).map(key => object[key]);
         }
-
-      });
-      // .catch((err) => {console.log('Request failed', err)})
+      })
+      .catch((err) => {console.log('Request failed', err)})
   }
   d3related(partialState, cb) {
     this.getRelatedArtists(partialState.activeNode.id)
