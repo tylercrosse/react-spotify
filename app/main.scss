@@ -25,3 +25,17 @@ body {
 .node:hover text {
   display: inline;
 }
+
+.loggedin {
+  line-height: 32px;
+  
+  span {
+    padding: 0 4px;
+    vertical-align: top;
+  }
+  
+  img {
+    width: 32px;
+    border-radius: 50%;
+  }
+}
