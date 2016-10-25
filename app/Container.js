@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from './Components/Login.js';
-import LoggedIn from './Components/LoggedIn.js';
-import ArtistSearch from './Components/ArtistSearch.js'
-import ArtistsList from './Components/ArtistsList.js'
-import Chart from './Components/Chart.js'
+import Login from './user/Login.js';
+import LoggedIn from './user/LoggedIn.js';
+import ArtistSearch from './artist/ArtistSearch.js'
+import ArtistsList from './artist/ArtistsList.js'
+import Chart from './viz/Chart.js'
 import { helpers } from './utils/helpers.js'
 
 let index = 0;

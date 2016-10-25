@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { d3Chart } from '../utils/d3stuff.js'
+import './viz.scss'
+
 
 export default class Chart extends React.Component {
   componentDidMount() {
