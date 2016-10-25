@@ -16,7 +16,7 @@ export const d3Chart = (function() {
   function create(el, props, state) {
     simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody()
-        .strength(-100)
+        .strength(-200)
       )
       .force('link', d3.forceLink()
         .id((d) => (d.id))
@@ -52,6 +52,12 @@ export const d3Chart = (function() {
     return dispatcher;
   }
   function update(el, state, dispatcher) {
+    simulation.nodes([]);
+    simulation.force('link').links([]);
+
+    g.selectAll('.node').remove();
+    g.selectAll('.link').remove();
+    
     _drawForceLay(el, state, dispatcher);
   }
   function destroy(el) {}

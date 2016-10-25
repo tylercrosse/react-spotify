@@ -22,7 +22,6 @@ export default class Chart extends React.Component {
     d3Chart.destroy(el);
   }
   nodeDblClick(d) {
-    console.log(d)
     this.props.d3related({activeNode: d});
   }
   render() {
