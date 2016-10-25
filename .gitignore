@@ -3,3 +3,4 @@ compiled/
 node_modules
 secrets.js
 env.json
+npm-debug.log
