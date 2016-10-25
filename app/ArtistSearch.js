@@ -12,7 +12,8 @@ export default class ArtistSearch extends React.Component {
       artistSearch: e.target.value
     });
   }
-  handleArtistSearch() {
+  handleArtistSearch(e) {
+    e.preventDefault();
     this.props.newSearch(this.state.artistSearch);
     this.setState({
       artistSearch: ''
@@ -20,10 +21,10 @@ export default class ArtistSearch extends React.Component {
   }
   render() {
     return (
-      <div>
+      <form onSubmit={(e) => this.handleArtistSearch(e)}>
         <input type="text" value={this.state.artistSearch} onChange= {(e) => this.updateNewSearch(e)} />
         <button onClick={(e) => this.handleArtistSearch(e)}>Search Artists</button>
-      </div>
+      </form>
     )
   }
 }
