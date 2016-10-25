@@ -1,5 +1,10 @@
 body {
   background-color: #ddd;
+  font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  text-decoration: none;
 }
 
 .link {
@@ -37,5 +42,38 @@ body {
   img {
     width: 32px;
     border-radius: 50%;
+  }
+}
+
+.login {
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+  background: transparent;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: rgb(255, 255, 255);
+  padding: 6px 20px;
+  border-radius: 500px;
+  border: 2px solid rgb(255, 255, 255);
+  
+  &:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+  }
+}
+
+.search {
+  input {
+    font-size: 14px;
+    padding: 6px 20px;
+    border-radius: 500px;
+    border: 2px solid rgb(255, 255, 255);
+    
+    &:focus {
+      outline: none;
+    }
   }
 }

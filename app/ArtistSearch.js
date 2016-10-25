@@ -21,9 +21,13 @@ export default class ArtistSearch extends React.Component {
   }
   render() {
     return (
-      <form onSubmit={(e) => this.handleArtistSearch(e)}>
-        <input type="text" value={this.state.artistSearch} onChange= {(e) => this.updateNewSearch(e)} />
-        <button onClick={(e) => this.handleArtistSearch(e)}>Search Artists</button>
+      <form className="search" onSubmit={(e) => this.handleArtistSearch(e)}>
+        <input 
+          type="text" 
+          value={this.state.artistSearch} 
+          placeholder="Artist Search"
+          onChange= {(e) => this.updateNewSearch(e)} />
+        <button type="submit" className="btn">Search</button>
       </form>
     )
   }

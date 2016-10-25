@@ -78,8 +78,13 @@ class Container extends React.Component{
       <div>
         <LoggedIn userData={this.state.userData} />
         <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
-        {this.state.artistSearched ? <ArtistsList artistId={(id) => this.getRelatedArtists(id)} results={this.state.artistRes} access_token={this.state.access_token} /> : null}
-        {this.state.forceData ? <Chart forceData={this.state.forceData} d3related={(partialState, cb) => this.d3related(partialState, cb)} /> : null}
+        {this.state.artistSearched ? <ArtistsList 
+          artistId={(id) => this.getRelatedArtists(id)} 
+          results={this.state.artistRes} 
+          access_token={this.state.access_token} /> : null}
+        {this.state.forceData ? <Chart 
+          forceData={this.state.forceData} 
+          d3related={(partialState, cb) => this.d3related(partialState, cb)} /> : null}
       </div>
     )
   }
