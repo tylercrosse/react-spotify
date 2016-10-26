@@ -1,5 +1,7 @@
-body {
-  background-color: #ddd;
+@import '../mixins/_variables.scss';
+
+.d3 {
+  background-color: $color-7;
 }
 
 .link {

@@ -1,0 +1,37 @@
+@import '../mixins/_variables.scss';
+
+.artist-list {
+  border-radius: 4px;
+  position: absolute;
+  top: 48px;
+  margin: 0 10px 10px;
+  width: 300px;
+  background: $color-4;
+  padding: 10px;
+}
+
+.artist-card {
+  background: $color-5;
+  margin: 2px;
+  padding: 4px;
+  cursor: pointer;
+  height: 56px;
+  
+  &:hover {
+    background: #4D4D4D;
+  }
+  
+  span {
+    padding-left: 4px;
+    line-height: 48px;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+}

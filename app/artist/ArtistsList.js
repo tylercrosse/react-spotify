@@ -1,5 +1,6 @@
 import React from 'react';
-import Artist from './Artist.js';
+import ArtistCard from './ArtistCard.js';
+import './artist.scss'
 
 export default class ArtistsList extends React.Component {
   constructor() {
@@ -14,9 +15,9 @@ export default class ArtistsList extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="artist-list">
         {this.props.results.map((artist, index) => (
-          <Artist artistId={(id) => this.wonkyPassUp(id)} artist={artist} key={index} />
+          <ArtistCard artistId={(id) => this.wonkyPassUp(id)} artist={artist} key={index} />
         ))}
       </div>
     )
