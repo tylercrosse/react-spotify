@@ -43,10 +43,8 @@ export const helpers = (function(){
         image: source.images.pop()
       });
       return {
-        forceData: {
-          nodes: newNodes,
-          links: newLinks
-        }
+        nodes: newNodes,
+        links: newLinks
       };
     } 
     else {
@@ -72,10 +70,8 @@ export const helpers = (function(){
         allLinks[key] = allLinks[key] || link;
       }
       return {
-        forceData: {
-          nodes: values(allNodes).map(Node),
-          links: values(allLinks).map(Link)
-        }
+        nodes: values(allNodes).map(Node),
+        links: values(allLinks).map(Link)
       };
     }
     function Node({ id, cluster, name, image }) {

@@ -11,3 +11,5 @@ export default function OauthTemplate(props) {
     </div>
   )
 }
+
+// <button id="obtain-new-token">Obtain new token using refresh token</button>

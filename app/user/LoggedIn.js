@@ -1,4 +1,5 @@
 import React from 'react';
+import './user.scss'
 
 export default function LoggedIn(props) {
   return (
@@ -8,5 +9,3 @@ export default function LoggedIn(props) {
     </div>     
   )
 }
-
-// <button id="obtain-new-token">Obtain new token using refresh token</button>

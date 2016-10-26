@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Login from './user/Login.js';
 import LoggedIn from './user/LoggedIn.js';
 import ArtistSearch from './artist/ArtistSearch.js'
@@ -12,14 +13,15 @@ class Container extends React.Component{
   constructor() {
     super();
     this.state = {
-      access_token: false,
-      refresh_token: false,
+      access_token: null,
+      refresh_token: null,
       userData: null,
-      artistSearched: false,
-      artistRes: {},
+      showArtistSearch: false,
+      artistRes: null,
       forceData: null,
       activeNode: null,
     }
+    this.handleClick = this.handleClick.bind(this)
   }
   componentWillMount() {
     let params = helpers.getHashParams()
@@ -30,6 +32,8 @@ class Container extends React.Component{
     })
   }
   componentDidMount() {
+    window.addEventListener('mousedown', this.handleClick, false);
+  
     fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
       .then((res) => res.json())
       .then((json) => {
@@ -40,6 +44,9 @@ class Container extends React.Component{
       })
       .catch((err) => {console.log('Request failed', err)})
   }
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleClick, false)
+  }
   artistSearchResults(search) {
     if (this.state.access_token) {
       fetch(`https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(search)}&type=artist`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
@@ -47,7 +54,7 @@ class Container extends React.Component{
       .then((json) => {
         console.log('Request succesful', json);
         this.setState({
-          artistSearched: true,
+          showArtistSearch: true,
           artistRes: json.artists.items
         });
       })
@@ -55,18 +62,52 @@ class Container extends React.Component{
     }
   }
   getRelatedArtists(id) {
+    this.setState({forceData: null});
     fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
       .then(res => res.json())
       .then(json => {
-        let newState = helpers.handleRelatedRes(id, json, this.state)
-        this.setState(newState)
+        let forceData = helpers.handleRelatedRes(id, json, this.state)
+        this.setState({
+          showArtistSearch: false,
+          forceData: forceData
+        });
       })
       .catch((err) => {console.log('Request failed', err)})
   }
-
   d3related(partialState, cb) {
     this.getRelatedArtists(partialState.activeNode.id)
     return this.setState(partialState, cb);
+  }
+  handleClick(e) {
+    if (this.state.showArtistSearch) {
+      const area = ReactDOM.findDOMNode(this.refs.area);
+      if (!area.contains(e.target)) {
+        this.setState({showArtistSearch: false});
+      }
+    }
+    
+  }
+  renderArtistRes() {
+    if (this.state.showArtistSearch) {
+      return (
+        <ArtistsList
+          ref='area'
+          artistId={(id) => this.getRelatedArtists(id)} 
+          results={this.state.artistRes} 
+          access_token={this.state.access_token} 
+        />
+      )
+    } else {return null;}
+  }
+  renderChart() {
+    if (this.state.forceData) {
+      return (
+        <Chart 
+          forceData={this.state.forceData} 
+          d3related={(partialState, cb) => this.d3related(partialState, cb)} 
+        /> 
+      )
+    } else {return null;}
   }
   render() {
     if (!this.state.userData || !this.state.access_token) {
@@ -76,15 +117,12 @@ class Container extends React.Component{
     }
     return (
       <div>
-        <LoggedIn userData={this.state.userData} />
-        <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
-        {this.state.artistSearched ? <ArtistsList 
-          artistId={(id) => this.getRelatedArtists(id)} 
-          results={this.state.artistRes} 
-          access_token={this.state.access_token} /> : null}
-        {this.state.forceData ? <Chart 
-          forceData={this.state.forceData} 
-          d3related={(partialState, cb) => this.d3related(partialState, cb)} /> : null}
+        <div className="nav">
+          <ArtistSearch newSearch={(f) => this.artistSearchResults(f)} />
+          <LoggedIn userData={this.state.userData} />
+        </div>
+        {this.renderArtistRes()}
+        {this.renderChart()}
       </div>
     )
   }
