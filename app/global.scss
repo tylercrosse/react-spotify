@@ -1,28 +1,41 @@
+@import './mixins/_normalize.scss';
+@import './mixins/_variables.scss';
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #ddd;
-  font-family: 'Montserrat', sans-serif;
+  font: {
+    size: 100%;
+    family: $primary-font; // variables inside partials > _variables.scss
+    weight: 400;
+  }
+  background-color: $color-3;
+  color: #989898;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500; 
+}
+
+p {
+  color: $color-2;
 }
 
 a {
   text-decoration: none;
 }
 
-.loggedin {
-  line-height: 32px;
-  
-  span {
-    padding: 0 4px;
-    vertical-align: top;
-  }
-  
-  img {
-    width: 32px;
-    border-radius: 50%;
-  }
+body, html {
+  height: 100%;
 }
 
-.login {
-  text-align: center;
+.nav {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  height: 52px;
 }
 
 .btn {
@@ -30,14 +43,14 @@ a {
   background: transparent;
   font-size: 14px;
   text-transform: uppercase;
-  color: rgb(255, 255, 255);
+  color: $color-2;
   padding: 6px 20px;
   border-radius: 500px;
-  border: 2px solid rgb(255, 255, 255);
+  border: 2px solid $color-2;
   
   &:hover {
-    background: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
+    background: $color-2;
+    color: $color-1;
   }
 }
 
@@ -46,7 +59,8 @@ a {
     font-size: 14px;
     padding: 6px 20px;
     border-radius: 500px;
-    border: 2px solid rgb(255, 255, 255);
+    border: 2px solid $color-2;
+    color: $color-1;
     
     &:focus {
       outline: none;
