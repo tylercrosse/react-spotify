@@ -32,7 +32,7 @@ class Container extends React.Component{
     })
   }
   componentDidMount() {
-    window.addEventListener('mousedown', this.handleClick, false);
+    window.addEventListener('click', this.handleClick, false);
   
     fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
       .then((res) => res.json())
@@ -85,7 +85,6 @@ class Container extends React.Component{
         this.setState({showArtistSearch: false});
       }
     }
-    
   }
   renderArtistRes() {
     if (this.state.showArtistSearch) {
