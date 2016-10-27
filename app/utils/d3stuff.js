@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+// TODO trim import, just using select, force, drag, zoom 
 import EventEmitter from 'eventemitter3';
 
 export const d3Chart = (function() {

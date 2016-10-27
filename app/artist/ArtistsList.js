@@ -16,8 +16,13 @@ export default class ArtistsList extends React.Component {
   render() {
     return (
       <div className="artist-list">
+        <span>Artists</span>
         {this.props.results.map((artist, index) => (
-          <ArtistCard artistId={(id) => this.wonkyPassUp(id)} artist={artist} key={index} />
+          <ArtistCard 
+            key={index}
+            artist={artist} 
+            artistId={(id) => this.wonkyPassUp(id)} 
+          />
         ))}
       </div>
     )

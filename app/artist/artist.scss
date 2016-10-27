@@ -54,11 +54,18 @@
   width: 300px;
   background: $color-4;
   padding: 10px;
+  
+  >span {
+    letter-spacing: 1px;
+    font-size: 14px;
+    line-height: 20px;
+    vertical-align: text-top;
+  }
 }
 
 .artist-card {
   background: $color-5;
-  margin: 2px;
+  margin: 2px 0;
   padding: 4px;
   cursor: pointer;
   height: 56px;
@@ -75,9 +82,17 @@
     overflow: hidden;
   }
   
-  img {
+  img, svg {
     width: 48px;
     height: 48px;
+  }
+  
+  img {
     border-radius: 50%;
+  }
+  
+  svg {
+    border-radius: 50%;
+    fill: $color-6;
   }
 }
