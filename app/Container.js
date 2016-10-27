@@ -62,7 +62,6 @@ class Container extends React.Component{
     }
   }
   getRelatedArtists(id) {
-    this.setState({forceData: null});
     fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
       .then(res => res.json())
       .then(json => {
@@ -91,7 +90,10 @@ class Container extends React.Component{
       return (
         <ArtistsList
           ref='area'
-          artistId={(id) => this.getRelatedArtists(id)} 
+          artistId={(id) => {
+            this.setState({forceData: null});
+            this.getRelatedArtists(id)
+          }} 
           results={this.state.artistRes} 
           access_token={this.state.access_token} 
         />
