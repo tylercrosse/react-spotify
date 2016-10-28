@@ -23,23 +23,16 @@ class Container extends React.Component{
     }
     this.handleClick = this.handleClick.bind(this)
   }
-  componentWillMount() {
-    let params = helpers.getHashParams()
-    params.error ? alert('There was an error during the authentication') : null;
-    this.setState({
-      access_token: params.access_token,
-      refresh_token: params.refresh_token
-    })
-  }
   componentDidMount() {
     window.addEventListener('click', this.handleClick, false);
   
-    fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+    fetch('auth/validate', {credentials: 'include'})
       .then((res) => res.json())
       .then((json) => {
         console.log('Request succesful', json);
         this.setState({
-          userData: json
+          access_token: json.access_token,
+          userData: json.user
         });
       })
       .catch((err) => {console.log('Request failed', err)})
@@ -111,7 +104,7 @@ class Container extends React.Component{
     } else {return null;}
   }
   render() {
-    if (!this.state.userData || !this.state.access_token) {
+    if (!this.state.userData) {
       return (
         <Login />
       )
