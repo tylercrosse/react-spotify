@@ -1,15 +1,15 @@
-import React from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
-import Login from './user/Login.js';
-import LoggedIn from './user/LoggedIn.js';
-import ArtistSearch from './artist/ArtistSearch.js'
-import ArtistsList from './artist/ArtistsList.js'
-import VizContainer from './viz/VizContainer.js'
-import { helpers } from './utils/helpers.js'
+import Login        from './user/Login.jsx';
+import LoggedIn     from './user/LoggedIn.jsx';
+import ArtistSearch from './artist/ArtistSearch.jsx'
+import ArtistsList  from './artist/ArtistsList.jsx'
+import VizContainer from './viz/VizContainer.jsx'
+import { helpers }  from './utils/helpers.js'
 
 let index = 0;
 
-class Container extends React.Component{
+export default class App extends React.Component{
   constructor() {
     super();
     this.state = {
@@ -120,6 +120,4 @@ class Container extends React.Component{
       </div>
     )
   }
-}
-
-export default Container
+};

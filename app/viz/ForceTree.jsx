@@ -1,8 +1,6 @@
-import React from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
 import { d3ForceTree } from '../utils/d3stuff.js'
-import NodeDetails from './NodeDetails'
-import './viz.scss'
 
 export default class ForceTree extends React.Component {
   constructor(props) {

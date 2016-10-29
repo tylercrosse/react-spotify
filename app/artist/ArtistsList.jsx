@@ -1,6 +1,6 @@
 import React from 'react';
-import ArtistCard from './ArtistCard.js';
-import './artist.scss'
+import ArtistCard from './ArtistCard.jsx';
+import                 './artist.scss'
 
 export default class ArtistsList extends React.Component {
   constructor() {

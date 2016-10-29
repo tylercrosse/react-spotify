@@ -1,9 +1,9 @@
-import React from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
-import Container from './Container.js'
-import './global.scss'
+import App from './App.jsx'
+import          './global.scss'
 
 ReactDOM.render(
-  <Container />,
+  <App />,
   document.getElementById('root')
 );

@@ -1,7 +1,7 @@
 import React from 'react';
-import ForceTree from './ForceTree.js'
-import NodeDetails from './NodeDetails.js'
-import './viz.scss'
+import ForceTree   from './ForceTree.jsx'
+import NodeDetails from './NodeDetails.jsx'
+import                  './viz.scss'
 
 export default class VizContainer extends React.Component {
   constructor(props) {
