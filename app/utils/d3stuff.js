@@ -3,8 +3,8 @@ import * as d3 from 'd3';
 import EventEmitter from 'eventemitter3';
 
 export const d3ForceTree = (function() {
-  let svg, g, link, node, defs
-  let width, height, simulation
+  let svg, slider, g, link, node, defs
+  let zoom, width, height, simulation
   let nodeSize = 16
   let transform = d3.zoomIdentity
   
@@ -28,13 +28,23 @@ export const d3ForceTree = (function() {
       .force('x', d3.forceX())
       .force('y', d3.forceY())
       
+    zoom = d3.zoom()
+      .scaleExtent([1 / 2, 4])
+      .on('zoom', _zoomed)
+      
+    slider = d3.select(el).append('input')
+      .datum({})
+      .attr('type', 'range')
+      .attr('value', zoom.scaleExtent()[0])
+      .attr('min', zoom.scaleExtent()[0])
+      .attr('max', zoom.scaleExtent()[1])
+      .attr('step', (zoom.scaleExtent()[1] - zoom.scaleExtent()[0]) / 100)
+      .on('input', _slided);
+      
     svg = d3.select(el).append('svg')
       .attr('width', window.innerWidth)
       .attr('height', window.innerHeight - navHeight)      
-      .call(d3.zoom()
-        .scaleExtent([1 / 2, 8])
-        .on('zoom', _zoomed)
-      )
+      .call(zoom)
       .on('dblclick.zoom', null)
       
     g = svg.append('g')
@@ -136,6 +146,10 @@ export const d3ForceTree = (function() {
   }
   function _zoomed() {
     g.attr('transform', d3.event.transform);
+    slider.property('value',  d3.event.transform.k);
+  }
+  function _slided(d) {
+    zoom.scaleTo(g, d3.select(this).property('value'))
   }
   function _dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();

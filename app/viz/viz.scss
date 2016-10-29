@@ -1,10 +1,5 @@
 @import '../mixins/_variables.scss';
 
-.d3 {
-  background-color: $color-7;
-}
-
-
 .link {
   stroke: #fff;
   stroke-opacity: 0.6;
@@ -35,15 +30,55 @@
   width: 100%;
   border: 1px solid red;
   bottom: 0;
-  
+
   span {
     line-height: 20vh;
     vertical-align: top;
     padding-left: 8px;
-    font-size: 24px
+    font-size: 24px;
   }
-  
+
   img {
     height: 20vh;
+  }
+}
+
+.d3 {
+  background-color: $color-7;
+
+  input[type=range] {
+    position: absolute;
+    right: -286px;
+    transform: rotate(90deg);
+    transform-origin: left;
+    -webkit-appearance: none;
+    width: 300px;
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: $color-2;
+    border: none;
+    border-radius: 3px;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: $color-2;
+    margin-top: -5px;
+  }
+
+  input[type=range]:focus {
+    outline: none;
+  }
+
+  input[type=range]:hover::-webkit-slider-thumb,
+  input[type=range]:focus::-webkit-slider-thumb,
+  input[type=range]:active::-webkit-slider-thumb {
+    background: $color-8;
   }
 }

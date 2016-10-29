@@ -2,7 +2,7 @@ import React from 'react'
 
 export default class NodeDetails extends React.Component {
   componentWillMount() {
-    console.log('🍕', this.props.hoveredNode)
+    // console.log('🍕', this.props.hoveredNode)
   }
   render() {
     let hn = this.props.hoveredNode;
