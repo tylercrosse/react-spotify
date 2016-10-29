@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 // TODO trim import, just using select, force, drag, zoom 
 import EventEmitter from 'eventemitter3';
 
-export const d3Chart = (function() {
+export const d3ForceTree = (function() {
   let svg, g, link, node, defs
   let width, height, simulation
   let nodeSize = 16
@@ -15,6 +15,7 @@ export const d3Chart = (function() {
   }
   
   function create(el, props, state) {
+    let navHeight = 52;
     simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody()
         .strength(-200)
@@ -26,10 +27,10 @@ export const d3Chart = (function() {
       )
       .force('x', d3.forceX())
       .force('y', d3.forceY())
-    
+      
     svg = d3.select(el).append('svg')
-      .attr('width', 800)
-      .attr('height', 600)      
+      .attr('width', window.innerWidth)
+      .attr('height', window.innerHeight - navHeight)      
       .call(d3.zoom()
         .scaleExtent([1 / 2, 8])
         .on('zoom', _zoomed)
@@ -94,6 +95,12 @@ export const d3Chart = (function() {
       .on('dblclick', (d) => {
         dispatcher.emit('node:dblclick', d)
       })
+      .on('mouseover', function(d) {
+        dispatcher.emit('node:mouseover', d);
+      })
+      .on('mouseout', function(d) {
+        dispatcher.emit('node:mouseout', d);
+      });
     
     defs = node.append('defs')
     

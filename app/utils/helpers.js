@@ -14,7 +14,8 @@ export const helpers = (function(){
       id: val.id,
       cluster: id,
       name: val.name,
-      image: val.images.pop()
+      image: val.images.pop(),
+      details: val
     }));
     let newLinks = json.artists.map(val => ({
       source: id,
@@ -29,7 +30,8 @@ export const helpers = (function(){
         id: source.id,
         cluster: source.id,
         name: source.name,
-        image: source.images.pop()
+        image: source.images.pop(),
+        details: source
       });
       return {
         nodes: newNodes,
@@ -63,8 +65,8 @@ export const helpers = (function(){
         links: values(allLinks).map(Link)
       };
     }
-    function Node({ id, cluster, name, image }) {
-      return { id, cluster, name, image };
+    function Node({ id, cluster, name, image, details }) {
+      return { id, cluster, name, image, details };
     }
     function Link({ source, target }) {
       return { source, target }; 

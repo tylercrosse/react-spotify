@@ -4,7 +4,7 @@ import Login from './user/Login.js';
 import LoggedIn from './user/LoggedIn.js';
 import ArtistSearch from './artist/ArtistSearch.js'
 import ArtistsList from './artist/ArtistsList.js'
-import Chart from './viz/Chart.js'
+import VizContainer from './viz/VizContainer.js'
 import { helpers } from './utils/helpers.js'
 
 let index = 0;
@@ -19,7 +19,7 @@ class Container extends React.Component{
       showArtistSearch: false,
       artistRes: null,
       forceData: null,
-      activeNode: null,
+      clickedNode: null,
     }
     this.handleClick = this.handleClick.bind(this)
   }
@@ -66,8 +66,8 @@ class Container extends React.Component{
       })
       .catch((err) => {console.log('Request failed', err)})
   }
-  d3related(partialState, cb) {
-    this.getRelatedArtists(partialState.activeNode.id)
+  d3dblclick(partialState, cb) {
+    this.getRelatedArtists(partialState.clickedNode.id)
     return this.setState(partialState, cb);
   }
   handleClick(e) {
@@ -93,12 +93,12 @@ class Container extends React.Component{
       )
     } else {return null;}
   }
-  renderChart() {
+  renderViz() {
     if (this.state.forceData) {
       return (
-        <Chart 
+        <VizContainer 
           forceData={this.state.forceData} 
-          d3related={(partialState, cb) => this.d3related(partialState, cb)} 
+          d3dblclick={(partialState, cb) => this.d3dblclick(partialState, cb)} 
         /> 
       )
     } else {return null;}
@@ -116,7 +116,7 @@ class Container extends React.Component{
           <LoggedIn userData={this.state.userData} />
         </div>
         {this.renderArtistRes()}
-        {this.renderChart()}
+        {this.renderViz()}
       </div>
     )
   }

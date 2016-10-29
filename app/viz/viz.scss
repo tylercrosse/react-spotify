@@ -4,6 +4,7 @@
   background-color: $color-7;
 }
 
+
 .link {
   stroke: #fff;
   stroke-opacity: 0.6;
@@ -26,4 +27,23 @@
 
 .node:hover text {
   display: inline;
+}
+
+.node-details {
+  background-color: $color-3;
+  position: absolute;
+  width: 100%;
+  border: 1px solid red;
+  bottom: 0;
+  
+  span {
+    line-height: 20vh;
+    vertical-align: top;
+    padding-left: 8px;
+    font-size: 24px
+  }
+  
+  img {
+    height: 20vh;
+  }
 }
