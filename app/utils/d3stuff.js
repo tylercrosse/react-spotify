@@ -128,11 +128,6 @@ export const d3ForceTree = (function() {
       .attr('cy', nodeSize / 2)
       .attr('r', nodeSize / 2)
       .style('fill', (d) => (`url(#${d.id})`))
-
-    node.append('text')
-      .attr('dx', nodeSize)
-      .attr('dy', (nodeSize / 2) + 4)
-      .text((d) => (d.name))
   }
   function _ticked() {
     link
