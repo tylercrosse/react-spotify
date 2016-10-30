@@ -1,17 +1,19 @@
-import React    from 'react';
-import ReactDOM from 'react-dom';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import { connect }            from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from './actions';
 import Login        from './user/Login.jsx';
 import LoggedIn     from './user/LoggedIn.jsx';
-import ArtistSearch from './artist/ArtistSearch.jsx'
-import ArtistsList  from './artist/ArtistsList.jsx'
-import VizContainer from './viz/VizContainer.jsx'
-import { helpers }  from './utils/helpers.js'
+import ArtistSearch from './artist/ArtistSearch.jsx';
+import ArtistsList  from './artist/ArtistsList.jsx';
+import VizContainer from './viz/VizContainer.jsx';
+import { helpers }  from './utils/helpers.js';
+import                   './global.scss';
 
-let index = 0;
-
-export default class App extends React.Component{
-  constructor() {
-    super();
+class App extends React.Component{
+  constructor(props) {
+    super(props);
     this.state = {
       access_token: null,
       refresh_token: null,
@@ -20,8 +22,8 @@ export default class App extends React.Component{
       artistRes: null,
       forceData: null,
       clickedNode: null,
-    }
-    this.handleClick = this.handleClick.bind(this)
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     window.addEventListener('click', this.handleClick, false);
@@ -120,4 +122,18 @@ export default class App extends React.Component{
       </div>
     )
   }
-};
+}
+
+function mapStateToProps(state) {
+  return {
+    
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
