@@ -1,6 +1,6 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import { d3ForceTree } from '../utils/d3stuff.js'
+import { d3ForceTree } from '../utils/d3forceTree.js'
 
 export default class ForceTree extends React.Component {
   constructor(props) {
@@ -33,13 +33,13 @@ export default class ForceTree extends React.Component {
     return this.props.forceData
   }
   nodeDblClick(d) {
-    this.props.d3dblclick({clickedNode: d});
+    this.props.actions.d3dblclick(d);
   }
   nodeMouseover(d) {
-    this.props.d3mouseover(d)
+    this.props.actions.d3mouseover(d)
   }
   nodeMouseout(d) {
-    this.props.d3mouseout(d)
+    this.props.actions.d3mouseout(d)
   }
   render() {
     return (

@@ -1,20 +1,18 @@
 const initialState = {
-  results: [],
-  showResults: false
+  hoveredNode: null
 };
 
 export default function search(state = initialState, action) {
   switch (action.type) {
-    case 'REQUEST_ARTISTS':
+    case 'D3_MOUSE_OVER':
       return {
         ...state,
-        results: action.payload.artists.items,
-        showResults: true
+        hoveredNode: action.node
       };
-    case 'HIDE_RESULTS':
+    case 'D3_MOUSE_OUT':
       return {
         ...state,
-        showResults: false
+        hoveredNode: null
       }
     default:
       return state;

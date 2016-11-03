@@ -20,9 +20,9 @@ export function requestValidation() {
   }
 }
 
-export function toggleResults() {
+export function hideResults() {
   return {
-    type: 'TOGGLE_RESULTS'
+    type: 'HIDE_RESULTS'
   }
 }
 
@@ -50,35 +50,34 @@ export function requestRelatedArtists(id) {
         let forceData = helpers.handleRelatedRes(id, json, state)
         dispatch({
           type: 'REQUEST_RELATED_ARTISTS',
-          forceData: forceData
+          forceData
         })
-        dispatch(toggleResults())
+        dispatch(hideResults())
       })
       // .catch((err) => {console.log('Request failed', err)})
   }
 }
 
+export function d3dblclick(node) {
+  return (dispatch) => {
+    dispatch(requestRelatedArtists(node.id));
+  }
+}
 
-// ===== LOGIN
+export function d3mouseover(node) {
+  return (dispatch) => {
+    dispatch({
+      type: 'D3_MOUSE_OVER',
+      node
+    })
+  }
+}
 
-// ===== RESULTS
-
-// searchsumbit
-// clearsearchfield
-// searchresultclick
-// windowclick ?? close search results
-
-// ===== VIZ
-
-// forcetreedoubleclick
-// forcetreemouseover
-// forcetreemouseout
-
-// ===== AJAX
-
-// fetchValidation
-  // initiated, error, success
-// fetchSearchResults
-  // initiated, error, success
-// fetchRelatedArtists
-  // initiated, error, success
+export function d3mouseout(node) {
+  return (dispatch) => {
+    dispatch({
+      type: 'D3_MOUSE_OUT',
+      node
+    })
+  }
+}

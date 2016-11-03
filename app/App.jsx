@@ -2,11 +2,12 @@ import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions    from './actions';
-import Login           from './user/Login.jsx';
-import LoggedIn        from './user/LoggedIn.jsx';
-import SearchContainer from './search/SearchContainer.jsx'
-import VizContainer    from './viz/VizContainer.jsx';
+import * as Actions       from './actions';
+import Login              from './user/Login.jsx';
+import LoggedIn           from './user/LoggedIn.jsx';
+import SearchContainer    from './search/SearchContainer.jsx';
+import VizContainer       from './viz/VizContainer.jsx';
+import ForceTreeContainer from './viz/ForceTreeContainer.jsx';
 import                      './global.scss';
 
 class App extends React.Component{
@@ -33,7 +34,7 @@ class App extends React.Component{
     if (this.props.showResults) {
       const area = ReactDOM.findDOMNode(this.refs.results);
       if (!area.contains(e.target)) {
-        this.props.actions.toggleResults();
+        this.props.actions.hideResults();
       }
     }
   }
@@ -59,7 +60,8 @@ class App extends React.Component{
           <SearchContainer ref='results' />
           <LoggedIn userData={this.props.userData} />
         </div>
-        {this.renderViz()}
+        {(Object.keys(this.props.forceData).length > 0) &&
+        <ForceTreeContainer />}
       </div>
     )
   }
