@@ -6,7 +6,6 @@ import * as Actions       from './actions';
 import Login              from './user/Login.jsx';
 import LoggedIn           from './user/LoggedIn.jsx';
 import SearchContainer    from './search/SearchContainer.jsx';
-import VizContainer       from './viz/VizContainer.jsx';
 import ForceTreeContainer from './viz/ForceTreeContainer.jsx';
 import                      './global.scss';
 
@@ -23,13 +22,6 @@ class App extends React.Component{
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClick, false)
   }
-  getRelatedArtists(id) {
-
-  }
-  d3dblclick(partialState, cb) {
-    this.getRelatedArtists(partialState.clickedNode.id)
-    return this.setState(partialState, cb);
-  }
   handleClick(e) {
     if (this.props.showResults) {
       const area = ReactDOM.findDOMNode(this.refs.results);
@@ -37,16 +29,6 @@ class App extends React.Component{
         this.props.actions.hideResults();
       }
     }
-  }
-  renderViz() {
-    if (Object.keys(this.props.forceData).length > 0) {
-      return (
-        <VizContainer 
-          forceData={this.props.forceData.forceData} 
-          d3dblclick={(partialState, cb) => this.d3dblclick(partialState, cb)} 
-        /> 
-      )
-    } else {return null;}
   }
   render() {
     if (!this.props.userData) {

@@ -14,7 +14,6 @@ export const d3ForceTree = (function() {
   }
   
   function create(el, props, state, actions) {
-    let navHeight = 52;
     simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody()
         .strength(-200)
@@ -40,9 +39,7 @@ export const d3ForceTree = (function() {
       .attr('step', (zoom.scaleExtent()[1] - zoom.scaleExtent()[0]) / 100)
       .on('input', _slided);
       
-    svg = d3.select(el).append('svg')
-      .attr('width', window.innerWidth)
-      .attr('height', window.innerHeight - navHeight)      
+    svg = d3.select(el).append('svg')   
       .call(zoom)
       .on('dblclick.zoom', null)
       
@@ -54,8 +51,8 @@ export const d3ForceTree = (function() {
     g.append('g')
       .attr('class', 'nodes')
       
-    width = +svg.attr('width')
-    height = +svg.attr('height')
+    _resize();
+    d3.select(window).on('resize', _resize);
       
     _drawForceLay(el, state, actions);
   }
@@ -175,5 +172,11 @@ export const d3ForceTree = (function() {
       })
       .attr('x', (d) => ( -(dx - nodeSize)/2 ))
       .attr('y', (d) => ( -(dy - nodeSize)/2 ))
+  }
+  function _resize() {
+    let navHeight = 52;
+    width = window.innerWidth
+    height = window.innerHeight - navHeight;
+    svg.attr('width', width).attr('height', height);
   }
 })();
