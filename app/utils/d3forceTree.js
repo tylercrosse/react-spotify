@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
 // TODO trim import, just using select, force, drag, zoom 
-import EventEmitter from 'eventemitter3';
 
 export const d3ForceTree = (function() {
   let svg, slider, g, link, node, defs
@@ -14,7 +13,7 @@ export const d3ForceTree = (function() {
     destroy: destroy
   }
   
-  function create(el, props, state) {
+  function create(el, props, state, actions) {
     let navHeight = 52;
     simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody()
@@ -58,24 +57,21 @@ export const d3ForceTree = (function() {
     width = +svg.attr('width')
     height = +svg.attr('height')
       
-    let dispatcher = new EventEmitter();
-    _drawForceLay(el, state, dispatcher);
-    
-    return dispatcher;
+    _drawForceLay(el, state, actions);
   }
-  function update(el, state, dispatcher) {
+  function update(el, state, actions) {
     simulation.nodes([]);
     simulation.force('link').links([]);
 
     g.selectAll('.node').remove();
     g.selectAll('.link').remove();
     
-    _drawForceLay(el, state, dispatcher);
+    _drawForceLay(el, state, actions);
   }
   function destroy(el) {}
-  function _drawForceLay(el, data, dispatcher) {
+  function _drawForceLay(el, data, actions) {
     _drawLinks(data)
-    _drawNodes(data, dispatcher)
+    _drawNodes(data, actions)
 
     simulation
       .nodes(data.nodes)
@@ -91,7 +87,7 @@ export const d3ForceTree = (function() {
       .enter().append('line')
       .attr('class', 'link')
   }
-  function _drawNodes(data, dispatcher) {
+  function _drawNodes(data, actions) {
     node = g.select('.nodes')
       .selectAll('.node')
       .data(data.nodes)
@@ -103,13 +99,13 @@ export const d3ForceTree = (function() {
         .on('end', _dragended)
       )
       .on('dblclick', (d) => {
-        dispatcher.emit('node:dblclick', d)
+        actions.d3dblclick(d);
       })
       .on('mouseover', function(d) {
-        dispatcher.emit('node:mouseover', d);
+        actions.d3mouseover(d);
       })
       .on('mouseout', function(d) {
-        dispatcher.emit('node:mouseout', d);
+        actions.d3mouseout(d);
       });
     
     defs = node.append('defs')
