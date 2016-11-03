@@ -1,8 +1,8 @@
-##
+# Spotify Visualization
 
-D3 + React Front End
-Express backend
-Webpack as the build tool
+- D3 + React + Redux Front End
+- Express backend
+- Webpack as the build tool
 
 I learned a lot from:
 - [Example D3 React Integration](https://github.com/nicolashery/example-d3-react)
@@ -14,7 +14,7 @@ I learned a lot from:
 npm install
 touch server/env.json
 # edit env.json with spotify info as below
-npm start
+npm run dev
 ```
 
 in `server/env.json`:
