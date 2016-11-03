@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as Actions    from './actions';
 import Login           from './user/Login.jsx';
 import LoggedIn        from './user/LoggedIn.jsx';
-import SearchContainer from './artist/SearchContainer.jsx'
+import SearchContainer from './search/SearchContainer.jsx'
 import VizContainer    from './viz/VizContainer.jsx';
 import                      './global.scss';
 

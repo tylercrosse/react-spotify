@@ -35,8 +35,10 @@
   background-color: $color-7;
 
   input[type=range] {
+    box-shadow: $shadow1;
     position: absolute;
-    right: -286px;
+    bottom: 320px;
+    right: -276px;
     transform: rotate(90deg);
     transform-origin: left;
     -webkit-appearance: none;
@@ -51,6 +53,7 @@
   }
 
   input[type=range]::-webkit-slider-thumb {
+    box-shadow: $shadow1;
     -webkit-appearance: none;
     border: none;
     height: 16px;
