@@ -1,10 +1,9 @@
 import * as d3 from 'd3';
 // TODO trim import, just using select, force, drag, zoom 
-import EventEmitter from 'eventemitter3';
 
-export const d3Chart = (function() {
-  let svg, g, link, node, defs
-  let width, height, simulation
+export const d3ForceTree = (function() {
+  let svg, slider, g, link, node, defs
+  let zoom, width, height, simulation
   let nodeSize = 16
   let transform = d3.zoomIdentity
   
@@ -14,7 +13,7 @@ export const d3Chart = (function() {
     destroy: destroy
   }
   
-  function create(el, props, state) {
+  function create(el, props, state, actions) {
     simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody()
         .strength(-200)
@@ -26,14 +25,22 @@ export const d3Chart = (function() {
       )
       .force('x', d3.forceX())
       .force('y', d3.forceY())
-    
-    svg = d3.select(el).append('svg')
-      .attr('width', 800)
-      .attr('height', 600)      
-      .call(d3.zoom()
-        .scaleExtent([1 / 2, 8])
-        .on('zoom', _zoomed)
-      )
+      
+    zoom = d3.zoom()
+      .scaleExtent([1 / 2, 4])
+      .on('zoom', _zoomed)
+      
+    slider = d3.select(el).append('input')
+      .datum({})
+      .attr('type', 'range')
+      .attr('value', zoom.scaleExtent()[0])
+      .attr('min', zoom.scaleExtent()[0])
+      .attr('max', zoom.scaleExtent()[1])
+      .attr('step', (zoom.scaleExtent()[1] - zoom.scaleExtent()[0]) / 100)
+      .on('input', _slided);
+      
+    svg = d3.select(el).append('svg')   
+      .call(zoom)
       .on('dblclick.zoom', null)
       
     g = svg.append('g')
@@ -44,27 +51,24 @@ export const d3Chart = (function() {
     g.append('g')
       .attr('class', 'nodes')
       
-    width = +svg.attr('width')
-    height = +svg.attr('height')
+    _resize();
+    d3.select(window).on('resize', _resize);
       
-    let dispatcher = new EventEmitter();
-    _drawForceLay(el, state, dispatcher);
-    
-    return dispatcher;
+    _drawForceLay(el, state, actions);
   }
-  function update(el, state, dispatcher) {
+  function update(el, state, actions) {
     simulation.nodes([]);
     simulation.force('link').links([]);
 
     g.selectAll('.node').remove();
     g.selectAll('.link').remove();
     
-    _drawForceLay(el, state, dispatcher);
+    _drawForceLay(el, state, actions);
   }
   function destroy(el) {}
-  function _drawForceLay(el, data, dispatcher) {
+  function _drawForceLay(el, data, actions) {
     _drawLinks(data)
-    _drawNodes(data, dispatcher)
+    _drawNodes(data, actions)
 
     simulation
       .nodes(data.nodes)
@@ -80,7 +84,7 @@ export const d3Chart = (function() {
       .enter().append('line')
       .attr('class', 'link')
   }
-  function _drawNodes(data, dispatcher) {
+  function _drawNodes(data, actions) {
     node = g.select('.nodes')
       .selectAll('.node')
       .data(data.nodes)
@@ -92,8 +96,14 @@ export const d3Chart = (function() {
         .on('end', _dragended)
       )
       .on('dblclick', (d) => {
-        dispatcher.emit('node:dblclick', d)
+        actions.d3dblclick(d);
       })
+      .on('mouseover', function(d) {
+        actions.d3mouseover(d);
+      })
+      .on('mouseout', function(d) {
+        actions.d3mouseout(d);
+      });
     
     defs = node.append('defs')
     
@@ -111,11 +121,6 @@ export const d3Chart = (function() {
       .attr('cy', nodeSize / 2)
       .attr('r', nodeSize / 2)
       .style('fill', (d) => (`url(#${d.id})`))
-
-    node.append('text')
-      .attr('dx', nodeSize)
-      .attr('dy', (nodeSize / 2) + 4)
-      .text((d) => (d.name))
   }
   function _ticked() {
     link
@@ -129,6 +134,10 @@ export const d3Chart = (function() {
   }
   function _zoomed() {
     g.attr('transform', d3.event.transform);
+    slider.property('value',  d3.event.transform.k);
+  }
+  function _slided(d) {
+    zoom.scaleTo(g, d3.select(this).property('value'))
   }
   function _dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -163,5 +172,11 @@ export const d3Chart = (function() {
       })
       .attr('x', (d) => ( -(dx - nodeSize)/2 ))
       .attr('y', (d) => ( -(dy - nodeSize)/2 ))
+  }
+  function _resize() {
+    let navHeight = 52;
+    width = window.innerWidth
+    height = window.innerHeight - navHeight;
+    svg.attr('width', width).attr('height', height);
   }
 })();

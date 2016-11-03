@@ -14,22 +14,24 @@ export const helpers = (function(){
       id: val.id,
       cluster: id,
       name: val.name,
-      image: val.images.pop()
+      image: val.images.pop(),
+      details: val
     }));
     let newLinks = json.artists.map(val => ({
       source: id,
       target: val.id
     }));
 
-    if (!state.forceData) {
+    if (Object.keys(state.forceData).length == 0) {
       // no old data
-      let source = state.artistRes.find(obj => obj.id === id);
+      let source = state.search.results.find(obj => obj.id === id);
 
       newNodes.push({
         id: source.id,
         cluster: source.id,
         name: source.name,
-        image: source.images.pop()
+        image: source.images.pop(),
+        details: source
       });
       return {
         nodes: newNodes,
@@ -37,14 +39,14 @@ export const helpers = (function(){
       };
     } 
     else {
-      const allNodes = state.forceData.nodes.reduce((acc, node) => {
+      const allNodes = state.forceData.forceData.nodes.reduce((acc, node) => {
         acc[node.id] = node;
         return acc;
       }, {});
       for (let node of newNodes) {
         allNodes[node.id] = allNodes[node.id] || node;
       }
-      const allLinks = state.forceData.links
+      const allLinks = state.forceData.forceData.links
         .map(n => ({
           source: n.source.id,
           target: n.target.id
@@ -59,18 +61,18 @@ export const helpers = (function(){
         allLinks[key] = allLinks[key] || link;
       }
       return {
-        nodes: values(allNodes).map(Node),
-        links: values(allLinks).map(Link)
+        nodes: _values(allNodes).map(_Node),
+        links: _values(allLinks).map(_Link)
       };
     }
-    function Node({ id, cluster, name, image }) {
-      return { id, cluster, name, image };
-    }
-    function Link({ source, target }) {
-      return { source, target }; 
-    }
-    function values(object) {
-      return Object.keys(object).map(key => object[key]);
-    }
+  }
+  function _Node({ id, cluster, name, image, details }) {
+    return { id, cluster, name, image, details };
+  }
+  function _Link({ source, target }) {
+    return { source, target }; 
+  }
+  function _values(object) {
+    return Object.keys(object).map(key => object[key]);
   }
 })()
