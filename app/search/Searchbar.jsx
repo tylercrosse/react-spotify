@@ -4,22 +4,22 @@ export default class Searchbar extends React.Component {
   constructor() {
     super()
     this.state = {
-      artistSearch: ''
+      query: ''
     }
   }
   updateNewSearch(e) {
     this.setState({
-      artistSearch: e.target.value
+      query: e.target.value
     });
   }
   handleArtistSearch(e) {
     e.preventDefault();
-    this.props.onSearchSubmit(this.state.artistSearch);
+    this.props.onSearchSubmit(this.state.query);
     this.handleX()
   }
   handleX(e) {
     this.setState({
-      artistSearch: ''
+      query: ''
     })
   }
   render() {
@@ -33,11 +33,11 @@ export default class Searchbar extends React.Component {
           </button>
           <input 
             type="text" 
-            value={this.state.artistSearch} 
+            value={this.state.query} 
             placeholder="Artist Search"
             onChange= {(e) => this.updateNewSearch(e)} 
           />
-          {this.state.artistSearch ? 
+          {this.state.query ? 
             <button className="x"
               onClick={(e) => this.handleX(e)}
             >

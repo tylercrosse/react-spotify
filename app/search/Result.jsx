@@ -16,7 +16,7 @@ export default function Result({ result, onResultSelect }) {
   }
   return (
     <div 
-      className="artist-card" 
+      className="result" 
       onClick={() => onResultSelect(result)}
     >
       {image}

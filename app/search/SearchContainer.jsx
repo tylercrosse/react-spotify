@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import Searchbar    from './Searchbar.jsx'
 import ResultsList  from './ResultsList.jsx'
 import * as Actions from '../actions/';
+import                   './search.scss';
 
 class SearchContainer extends React.Component {
   render() {

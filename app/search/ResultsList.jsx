@@ -10,7 +10,7 @@ export default function ResultsList({ results, onResultSelect }) {
     />
   ))
   return (
-    <div className='artist-list'>
+    <div className='results-list'>
       <span>Artists</span>
       {resultItems}
     </div>
