@@ -1,7 +1,13 @@
 import { helpers } from '../utils/helpers.js';
 
+export function selectResult(result) {
+  return dispatch => {
+    dispatch(requestRelatedArtists(result.id));
+  }
+}
+
 export function requestValidation() {
-  return function(dispatch) {
+  return (dispatch) => {
     fetch('auth/validate', {credentials: 'include'})
       .then(res => res.json())
       .then(json => {
@@ -14,8 +20,14 @@ export function requestValidation() {
   }
 }
 
+export function toggleResults() {
+  return {
+    type: 'TOGGLE_RESULTS'
+  }
+}
+
 export function requestArtists(query, access_token) {
-  return function(dispatch, getState) {
+  return (dispatch, getState) => {
     const state = getState();
     fetch(`https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(query)}&type=artist`, {headers: {'Authorization': 'Bearer ' + state.auth.access_token}})
       .then(res => res.json())
@@ -29,17 +41,18 @@ export function requestArtists(query, access_token) {
   }
 }
 
-export function requestRelatedArtists(artistId) {
-  return function(dispatch, getstate) {
+export function requestRelatedArtists(id) {
+  return (dispatch, getState) => {
     const state = getState();
-    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + this.state.access_token}})
+    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {'Authorization': 'Bearer ' + state.auth.access_token}})
       .then(res => res.json())
       .then(json => {
-        let forceData = helpers.handleRelatedRes(id, json, this.state)
-        this.setState({
-          showArtistSearch: false,
+        let forceData = helpers.handleRelatedRes(id, json, state)
+        dispatch({
+          type: 'REQUEST_RELATED_ARTISTS',
           forceData: forceData
-        });
+        })
+        dispatch(toggleResults())
       })
       // .catch((err) => {console.log('Request failed', err)})
   }
@@ -48,7 +61,7 @@ export function requestRelatedArtists(artistId) {
 
 // ===== LOGIN
 
-// ===== SEARCH
+// ===== RESULTS
 
 // searchsumbit
 // clearsearchfield

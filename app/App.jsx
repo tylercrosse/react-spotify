@@ -14,10 +14,6 @@ import                      './global.scss';
 class App extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {
-      showArtistSearch: false,
-      artistRes: null,
-    };
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
@@ -28,9 +24,6 @@ class App extends React.Component{
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClick, false)
   }
-  artistSearchResults(search) {
-
-  }
   getRelatedArtists(id) {
 
   }
@@ -39,18 +32,18 @@ class App extends React.Component{
     return this.setState(partialState, cb);
   }
   handleClick(e) {
-    // if (this.state.showArtistSearch) {
-    //   const area = ReactDOM.findDOMNode(this.refs.area);
-    //   if (!area.contains(e.target)) {
-    //     this.setState({showArtistSearch: false});
-    //   }
-    // }
+    if (this.props.showResults) {
+      const area = ReactDOM.findDOMNode(this.refs.results);
+      if (!area.contains(e.target)) {
+        this.props.actions.toggleResults();
+      }
+    }
   }
   renderViz() {
-    if (this.props.forceData) {
+    if (Object.keys(this.props.forceData).length > 0) {
       return (
         <VizContainer 
-          forceData={this.props.forceData} 
+          forceData={this.props.forceData.forceData} 
           d3dblclick={(partialState, cb) => this.d3dblclick(partialState, cb)} 
         /> 
       )
@@ -65,7 +58,7 @@ class App extends React.Component{
     return (
       <div>
         <div className="nav">
-          <SearchContainer />
+          <SearchContainer ref='results' />
           <LoggedIn userData={this.props.userData} />
         </div>
         {this.renderViz()}
@@ -78,7 +71,8 @@ function mapStateToProps(state) {
   return {
     forceData: state.forceData,
     access_token: state.auth.access_token,
-    userData: state.auth.userData
+    userData: state.auth.userData,
+    showResults: state.search.showResults
   };
 }
 function mapDispatchToProps(dispatch) {

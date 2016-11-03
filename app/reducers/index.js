@@ -1,23 +1,12 @@
 import { combineReducers } from 'redux';
-import search from './search';
+import auth      from './auth';
+import search    from './search';
+import forceData from './forceData'
 
 const rootReducer = combineReducers({
+  auth,
   search,
-  auth
+  forceData
 })
 
 export default rootReducer;
-
-function auth(state = {}, action) {
-  switch (action.type) {
-    case 'REQUEST_VALIDATION':
-      return {
-        ...state,
-        isAuthenticated: action.payload.isAuthenticated,
-        access_token: action.payload.access_token,
-        userData: action.payload.user
-      }
-    default:
-      return state;
-  }
-}

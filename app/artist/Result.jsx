@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Result({ data, onResultSelect }) {
+export default function Result({ result, onResultSelect }) {
   let image;
-  if (data.images.length > 0) {
+  if (result.images.length > 0) {
     image = (
-      <img src={data.images[0].url} alt="profile image" />
+      <img src={result.images[0].url} alt="profile image" />
     )
   } 
   else {
@@ -17,10 +17,10 @@ export default function Result({ data, onResultSelect }) {
   return (
     <div 
       className="artist-card" 
-      onClick={() => onResultSelect}
+      onClick={() => onResultSelect(result)}
     >
       {image}
-      <span>{data.name}</span>
+      <span>{result.name}</span>
     </div>
   )
 }

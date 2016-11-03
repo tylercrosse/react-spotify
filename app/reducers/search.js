@@ -1,5 +1,6 @@
 const initialState = {
-  results: []
+  results: [],
+  showResults: false
 };
 
 export default function search(state = initialState, action) {
@@ -7,8 +8,14 @@ export default function search(state = initialState, action) {
     case 'REQUEST_ARTISTS':
       return {
         ...state,
-        results: action.payload.artists.items
+        results: action.payload.artists.items,
+        showResults: true
       };
+    case 'TOGGLE_RESULTS':
+      return {
+        ...state,
+        showResults: !state.showResults
+      }
     default:
       return state;
   }

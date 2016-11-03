@@ -10,9 +10,12 @@ class SearchContainer extends React.Component {
     return (
       <div>
         <Searchbar 
-        onSearchSubmit={this.props.actions.requestArtists}
+          onSearchSubmit={this.props.actions.requestArtists}
         />
-        <ResultsList results={this.props.results} />
+        {this.props.showResults &&
+        <ResultsList results={this.props.results}
+          onResultSelect={this.props.actions.selectResult}
+        />}
       </div>
     )
   }
@@ -20,6 +23,7 @@ class SearchContainer extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    showResults: state.search.showResults,
     results: state.search.results
   }
 }

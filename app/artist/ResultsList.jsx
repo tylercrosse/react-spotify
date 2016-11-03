@@ -1,12 +1,12 @@
 import React  from 'react';
 import Result from './Result.jsx'
 
-export default function ResultsList(props) {
-  const resultItems = props.results.map((data, index) => (
+export default function ResultsList({ results, onResultSelect }) {
+  const resultItems = results.map((result, index) => (
     <Result 
-      key={data.id}
-      data={data} 
-      onResultSelect={props.onResultSelect}
+      key={result.id}
+      result={result} 
+      onResultSelect={onResultSelect}
     />
   ))
   return (
