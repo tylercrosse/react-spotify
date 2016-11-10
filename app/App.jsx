@@ -7,7 +7,8 @@ import Login              from './user/Login.jsx';
 import LoggedIn           from './user/LoggedIn.jsx';
 import SearchContainer    from './search/SearchContainer.jsx';
 import ForceTreeContainer from './viz/ForceTreeContainer.jsx';
-import                      './global.scss';
+import NodeDetails        from './viz/NodeDetails.jsx';
+import                         './global.scss';
 
 class App extends React.Component{
   constructor(props) {
@@ -43,7 +44,9 @@ class App extends React.Component{
           <LoggedIn userData={this.props.userData} />
         </div>
         {(Object.keys(this.props.forceData).length > 0) &&
-        <ForceTreeContainer />}
+          <ForceTreeContainer />}
+        {this.props.hoveredNode &&
+          <NodeDetails />}
       </div>
     )
   }
@@ -54,7 +57,8 @@ function mapStateToProps(state) {
     forceData: state.forceData,
     access_token: state.auth.access_token,
     userData: state.auth.userData,
-    showResults: state.search.showResults
+    showResults: state.search.showResults,
+    hoveredNode: state.d3Reducer.hoveredNode
   };
 }
 function mapDispatchToProps(dispatch) {

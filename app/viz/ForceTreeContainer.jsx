@@ -7,7 +7,7 @@ import                   './viz.scss'
 
 function mapStateToProps(state) {
   return {
-    forceData: state.forceData.forceData
+    forceData: state.forceData
   }
 }
 

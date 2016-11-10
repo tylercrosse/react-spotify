@@ -39,14 +39,14 @@ export const helpers = (function(){
       };
     } 
     else {
-      const allNodes = state.forceData.forceData.nodes.reduce((acc, node) => {
+      const allNodes = state.forceData.nodes.reduce((acc, node) => {
         acc[node.id] = node;
         return acc;
       }, {});
       for (let node of newNodes) {
         allNodes[node.id] = allNodes[node.id] || node;
       }
-      const allLinks = state.forceData.forceData.links
+      const allLinks = state.forceData.links
         .map(n => ({
           source: n.source.id,
           target: n.target.id

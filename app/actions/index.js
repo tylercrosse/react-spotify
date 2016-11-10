@@ -64,11 +64,13 @@ export function d3dblclick(node) {
   }
 }
 
-export function d3mouseover(node) {
+export function d3mouseover(node, event) {
+  node.clientX = event.clientX;
+  node.clientY = event.clientY;
   return (dispatch) => {
     dispatch({
       type: 'D3_MOUSE_OVER',
-      node
+      node,
     })
   }
 }

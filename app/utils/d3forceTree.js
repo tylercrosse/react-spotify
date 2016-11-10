@@ -99,7 +99,8 @@ export const d3ForceTree = (function() {
         actions.d3dblclick(d);
       })
       .on('mouseover', function(d) {
-        actions.d3mouseover(d);
+        const e = d3.event;
+        actions.d3mouseover(d, e);
       })
       .on('mouseout', function(d) {
         actions.d3mouseout(d);

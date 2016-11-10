@@ -3,7 +3,7 @@ export default function forceData(state = {}, action) {
     case 'REQUEST_RELATED_ARTISTS':
       return {
         ...state,
-        forceData: action.forceData
+        ...action.forceData
       }
   default:
     return state;

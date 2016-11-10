@@ -7,7 +7,8 @@ import d3Reducer from './d3Reducer'
 const rootReducer = combineReducers({
   auth,
   search,
-  forceData
+  forceData,
+  d3Reducer
 })
 
 export default rootReducer;
