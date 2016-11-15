@@ -1,12 +1,12 @@
-'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var StatsPlugin = require('stats-webpack-plugin');
-var autoprefixer = require('autoprefixer');
-var precss = require('precss');
+
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StatsPlugin = require('stats-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const precss = require('precss');
 
 module.exports = {
   entry: [
@@ -45,17 +45,17 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        "presets": ["es2015", "stage-0", "react"]
+        presets: ['es2015', 'stage-0', 'react']
       }
     }, {
       test: /\.json?$/,
       loader: 'json'
     }, {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!sass-loader")
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract('css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!sass-loader')
     }]
   },
-  postcss: function() {
+  postcss() {
     return [autoprefixer, precss];
   },
   sassLoader: {

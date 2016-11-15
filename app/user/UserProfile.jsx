@@ -4,7 +4,7 @@ export default function UserProfile(props) {
   return (
     <div>
       <h1>Logged in as {props.display_name}</h1>
-      <img width="150" src={props.images[0].url} alt="profile image" />
+      <img width="150" src={props.images[0].url} alt="profile" />
       <dl>
         <dt>Display Name</dt><dd>{props.display_name}</dd>
         <dt>Id</dt><dd>{props.id}</dd>
@@ -15,5 +15,5 @@ export default function UserProfile(props) {
         <dt>Country</dt><dd>{props.country}</dd>
       </dl>
     </div>
-  )
+  );
 }

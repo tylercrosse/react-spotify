@@ -10,22 +10,22 @@ import ForceTreeContainer from './viz/ForceTreeContainer.jsx';
 import NodeDetails        from './viz/NodeDetails.jsx';
 import                         './global.scss';
 
-class App extends React.Component{
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     window.addEventListener('click', this.handleClick, false);
-    
+
     this.props.actions.requestValidation();
   }
   componentWillUnmount() {
-    window.removeEventListener('click', this.handleClick, false)
+    window.removeEventListener('click', this.handleClick, false);
   }
   handleClick(e) {
     if (this.props.showResults) {
-      const area = ReactDOM.findDOMNode(this.refs.results);
+      const area = ReactDOM.findDOMNode(this.results);
       if (!area.contains(e.target)) {
         this.props.actions.hideResults();
       }
@@ -35,12 +35,12 @@ class App extends React.Component{
     if (!this.props.userData) {
       return (
         <Login />
-      )
+      );
     }
     return (
       <div>
         <div className="nav">
-          <SearchContainer ref='results' />
+          <SearchContainer ref={(c) => { this.results = c; }} />
           <LoggedIn userData={this.props.userData} />
         </div>
         {(Object.keys(this.props.forceData).length > 0) &&
@@ -48,7 +48,7 @@ class App extends React.Component{
         {this.props.hoveredNode &&
           <NodeDetails />}
       </div>
-    )
+    );
   }
 }
 

@@ -9,7 +9,7 @@ export default function OauthTemplate(props) {
         <dt>Refresh token</dt><dd>{props.refresh_token}</dd>z
       </dl>
     </div>
-  )
+  );
 }
 
 // <button id="obtain-new-token">Obtain new token using refresh token</button>

@@ -4,8 +4,8 @@ export default function forceData(state = {}, action) {
       return {
         ...state,
         ...action.forceData
-      }
-  default:
-    return state;
+      };
+    default:
+      return state;
   }
 }

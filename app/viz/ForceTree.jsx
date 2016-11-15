@@ -1,27 +1,24 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import { d3ForceTree } from '../utils/d3forceTree.js'
+import d3ForceTree from '../utils/d3forceTree';
 
 export default class ForceTree extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   componentDidMount() {
-    let el = ReactDOM.findDOMNode(this);
-    d3ForceTree.create(el, null, this.getForceTreeState(), this.props.actions)
+    const el = ReactDOM.findDOMNode(this);
+    d3ForceTree.create(el, null, this.getForceTreeState(), this.props.actions);
   }
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (this.props.forceData !== nextProps.forceData) {
       return true;
     }
     return false;
   }
   componentDidUpdate() {
-    let el = ReactDOM.findDOMNode(this);
-    d3ForceTree.update(el, this.getForceTreeState(), this.props.actions)
+    const el = ReactDOM.findDOMNode(this);
+    d3ForceTree.update(el, this.getForceTreeState(), this.props.actions);
   }
   componentWillUnmount() {
-    let el = ReactDOM.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this);
     d3ForceTree.destroy(el);
   }
   getForceTreeState() {
@@ -29,7 +26,7 @@ export default class ForceTree extends React.Component {
   }
   render() {
     return (
-      <div className="d3"></div>
-    )
+      <div className="d3" />
+    );
   }
 }

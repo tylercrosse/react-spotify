@@ -13,7 +13,7 @@ export default function hoveredNode(state = initialState, action) {
       return {
         ...state,
         hoveredNode: null
-      }
+      };
     default:
       return state;
   }

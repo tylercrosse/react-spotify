@@ -6,7 +6,7 @@ export default function auth(state = {}, action) {
         isAuthenticated: action.payload.isAuthenticated,
         access_token: action.payload.access_token,
         userData: action.payload.user
-      }
+      };
     default:
       return state;
   }

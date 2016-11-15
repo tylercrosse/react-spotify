@@ -15,7 +15,7 @@ export default function search(state = initialState, action) {
       return {
         ...state,
         showResults: false
-      }
+      };
     default:
       return state;
   }
