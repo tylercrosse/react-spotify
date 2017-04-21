@@ -2,13 +2,13 @@ import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions       from './actions';
-import Login              from './user/Login.jsx';
-import LoggedIn           from './user/LoggedIn.jsx';
-import SearchContainer    from './search/SearchContainer.jsx';
-import ForceTreeContainer from './viz/ForceTreeContainer.jsx';
-import NodeDetails        from './viz/NodeDetails.jsx';
-import                         './global.scss';
+import * as Actions           from './actions';
+import Login                  from './user/Login.jsx';
+import LoggedIn               from './user/LoggedIn.jsx';
+import SearchContainer        from './search/SearchContainer.jsx';
+import ForceTreeContainer     from './viz/ForceTreeContainer.jsx';
+import NodeDetails            from './viz/NodeDetails.jsx';
+import                             './global.scss';
 
 class App extends React.Component {
   constructor(props) {
