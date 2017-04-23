@@ -7,7 +7,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 // const { BundleAnalyzerPlugin } = BundleAnalyzer;
 const isProd = (process.env.NODE_ENV === 'production');
-const entryPath = path.join(__dirname, './app/main.js');
+const entryPath = path.join(__dirname, './src/client/');
 const vendors = [
   'd3',
   'react',
@@ -72,7 +72,7 @@ const webpackConfig = {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [path.resolve(__dirname, './app')],
+        include: [path.resolve(__dirname, './src')],
         query: {
           presets: ['react-hmre']
         }
@@ -129,7 +129,7 @@ if (isProd) {
         mergeStaticsConfig: true,
         // stripPrefix: 'public/',
       }
-    ),
+    )
     // new BundleAnalyzerPlugin()
   );
   webpackConfig.module.loaders.push(
@@ -145,7 +145,7 @@ if (isProd) {
     {
       test: /\.(js|jsx)?$/,
       use: 'babel-loader',
-      include: [path.resolve(__dirname, './app')]
+      include: [path.resolve(__dirname, './src')]
     }
   );
 } else {

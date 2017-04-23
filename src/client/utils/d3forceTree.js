@@ -151,17 +151,17 @@ const d3ForceTree = (function iife() {
   }
   function _dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
+    d.fx = d.x; // eslint-disable-line no-param-reassign
+    d.fy = d.y; // eslint-disable-line no-param-reassign
   }
   function _dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
+    d.fx = d3.event.x; // eslint-disable-line no-param-reassign
+    d.fy = d3.event.y; // eslint-disable-line no-param-reassign
   }
   function _dragended(d) {
     if (!d3.event.active) simulation.alphaTarget(0.0).restart();
-    d.fx = null;
-    d.fy = null;
+    d.fx = null; // eslint-disable-line no-param-reassign
+    d.fy = null; // eslint-disable-line no-param-reassign
   }
   function _makeRound() {
     let w = 0;

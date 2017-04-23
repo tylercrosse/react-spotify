@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack.config';
+import config from '../../webpack.config';
 import routes from './routes/routes';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
