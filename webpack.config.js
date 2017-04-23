@@ -3,25 +3,19 @@ const webpack                 = require('webpack');
 const CleanPlugin             = require('clean-webpack-plugin');
 const ExtractTextPlugin       = require('extract-text-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+// const BundleAnalyzer          = require('webpack-bundle-analyzer');
 
+// const { BundleAnalyzerPlugin } = BundleAnalyzer;
 const isProd = (process.env.NODE_ENV === 'production');
 const entryPath = path.join(__dirname, './app/main.js');
 const vendors = [
-  // 'moment',
-  // 'normalizr',
+  'd3',
   'react',
   'react-dom',
-  // 'react-modal',
-  // 'react-router',
-  // 'react-scroll',
   'react-redux',
-  // 'react-router-redux',
   'redux',
   'redux-thunk',
-  // 'redux-api-middleware',
-  // 'redux-socket.io',
   // 'reselect',
-  // 'socket.io-client',
 ];
 const sharedSassLoaders = [
   { loader: 'css-loader' },
@@ -65,7 +59,7 @@ const webpackConfig = {
       'public/js',
       'public/css'
     ], {verbose: true}),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
@@ -133,12 +127,10 @@ if (isProd) {
           'public/font/**.*',
         ],
         mergeStaticsConfig: true,
-        stripPrefix: 'public/',
-        // dynamicUrlToDependencies: {
-        //   '/': 'templates/pizza.html'
-        // }
+        // stripPrefix: 'public/',
       }
-    )
+    ),
+    // new BundleAnalyzerPlugin()
   );
   webpackConfig.module.loaders.push(
     {
@@ -153,7 +145,7 @@ if (isProd) {
     {
       test: /\.(js|jsx)?$/,
       use: 'babel-loader',
-      include: [path.resolve(__dirname, './src')]
+      include: [path.resolve(__dirname, './app')]
     }
   );
 } else {
