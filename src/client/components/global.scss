@@ -1,5 +1,5 @@
-@import './mixins/_normalize.scss';
-@import './mixins/_variables.scss';
+@import './_normalize.scss';
+@import './_variables.scss';
 
 *, *:after, *:before {
   box-sizing: border-box;
@@ -16,7 +16,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-weight: 500; 
+  font-weight: 500;
 }
 
 p {
@@ -48,7 +48,7 @@ body, html {
   padding: 6px 20px;
   border-radius: 500px;
   border: 2px solid $color-2;
-  
+
   &:hover {
     background: $color-2;
     color: $color-1;

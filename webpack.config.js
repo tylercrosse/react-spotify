@@ -33,7 +33,6 @@ const sharedSassLoaders = [
       }
     }
   },
-  // { loader: 'resolve-url-loader' }, // @fontface
   {
     loader: 'sass-loader',
     options: {sourceMap: true}

@@ -1,6 +1,6 @@
-import React    from 'react';
-import ReactDOM from 'react-dom';
-import d3ForceTree from '../utils/d3forceTree';
+import React       from 'react';
+import ReactDOM    from 'react-dom';
+import d3ForceTree from '../../utils/d3forceTree';
 
 export default class ForceTree extends React.Component {
   componentDidMount() {

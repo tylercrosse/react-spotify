@@ -1,5 +1,11 @@
 import * as d3 from 'd3';
 // TODO trim import, just using select, force, drag, zoom
+// const d3 = Object.assign({},
+//   require('d3-selection'),
+//   require('d3-force'),
+//   require('d3-zoom'),
+//   require('d3-drag')
+// );
 
 const d3ForceTree = (function iife() {
   let svg;
