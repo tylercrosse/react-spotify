@@ -1,5 +1,5 @@
 import React from 'react';
-import './user.scss';
+import            './user.scss';
 
 export default function LoggedIn(props) {
   return (

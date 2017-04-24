@@ -1,4 +1,4 @@
-@import '../mixins/_variables.scss';
+@import '../_variables.scss';
 
 .link {
   stroke: #fff;
@@ -19,14 +19,14 @@
   box-shadow: $shadow1;
   border-radius: 4px;
   display: flex;
-  
+
   .node-det-img-ctnr {
     height: 86px;
     width: 86px;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
   }
-  
+
   .node-det-caption {
     flex: 1;
     height: 86px;
@@ -35,7 +35,7 @@
   }
 
   h3, p {
-    margin: 0; 
+    margin: 0;
   }
 
   h3 {
@@ -43,7 +43,7 @@
     font-size: 16px;
     color: $color-2;
   }
-  
+
   p {
     font-size: 12px;
     color: $color-7

@@ -65,8 +65,8 @@ export function d3dblclick(node) {
 }
 
 export function d3mouseover(node, event) {
-  node.clientX = event.clientX;
-  node.clientY = event.clientY;
+  node.clientX = event.clientX; // eslint-disable-line no-param-reassign
+  node.clientY = event.clientY; // eslint-disable-line no-param-reassign
   return (dispatch) => {
     dispatch({
       type: 'D3_MOUSE_OVER',

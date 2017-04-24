@@ -1,8 +1,8 @@
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../actions';
-import ForceTree    from './ForceTree.jsx';
-import                   './viz.scss';
+import * as Actions           from '../../actions';
+import ForceTree              from './ForceTree.jsx';
+import                             './viz.scss';
 
 function mapStateToProps(state) {
   return {

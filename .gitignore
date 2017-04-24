@@ -1,4 +1,5 @@
-dist/
+public/js/
+public/css/
 compiled/
 node_modules
 secrets.js
