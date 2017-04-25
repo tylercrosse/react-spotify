@@ -29,7 +29,7 @@ function NodeDetails({ hoveredNode }) {
 
 function mapStateToProps(state) {
   return {
-    hoveredNode: state.d3Reducer.hoveredNode
+    hoveredNode: state.ui.hoveredNode
   };
 }
 

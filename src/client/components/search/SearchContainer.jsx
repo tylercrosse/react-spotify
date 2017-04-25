@@ -3,7 +3,9 @@ import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Searchbar              from './Searchbar.jsx';
 import ResultsList            from './ResultsList.jsx';
-import * as Actions           from '../../actions/';
+import { requestRelatedArtists,
+  requestArtists } from '../../ducks/artist';
+
 import                             './search.scss';
 
 function SearchContainer(props) {
@@ -15,7 +17,7 @@ function SearchContainer(props) {
       {props.showResults &&
         <ResultsList
           results={props.results}
-          onResultSelect={props.actions.selectResult}
+          onResultSelect={props.actions.requestRelatedArtists}
         />}
     </div>
   );
@@ -23,10 +25,15 @@ function SearchContainer(props) {
 
 function mapStateToProps(state) {
   return {
-    showResults: state.search.showResults,
-    results: state.search.results
+    showResults: state.ui.showResults,
+    results: state.artist.search.results
   };
 }
+
+const Actions = {
+  requestRelatedArtists,
+  requestArtists
+};
 
 function mapDispatchToProps(dispatch) {
   return {

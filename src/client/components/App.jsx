@@ -2,7 +2,8 @@ import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions           from '../actions';
+import { hideResults }        from '../ducks/ui';
+import { requestValidation }  from '../ducks/auth';
 import Login                  from './user/Login.jsx';
 import LoggedIn               from './user/LoggedIn.jsx';
 import SearchContainer        from './search/SearchContainer.jsx';
@@ -54,13 +55,19 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    forceData: state.forceData,
+    forceData: state.artist.forceData,
     access_token: state.auth.access_token,
     userData: state.auth.userData,
-    showResults: state.search.showResults,
-    hoveredNode: state.d3Reducer.hoveredNode
+    showResults: state.ui.showResults,
+    hoveredNode: state.ui.hoveredNode
   };
 }
+
+const Actions = {
+  hideResults,
+  requestValidation
+};
+
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(Actions, dispatch)

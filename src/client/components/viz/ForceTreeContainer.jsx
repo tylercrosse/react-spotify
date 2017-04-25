@@ -1,12 +1,20 @@
-import { connect }            from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions           from '../../actions';
-import ForceTree              from './ForceTree.jsx';
-import                             './viz.scss';
+import { requestRelatedArtists } from '../../ducks/artist';
+import { nodeMouseOver, nodeMouseOut } from '../../ducks/ui';
+
+import ForceTree from './ForceTree.jsx';
+import './viz.scss';
+
+const Actions = {
+  requestRelatedArtists,
+  nodeMouseOver,
+  nodeMouseOut
+};
 
 function mapStateToProps(state) {
   return {
-    forceData: state.forceData
+    forceData: state.artist.forceData
   };
 }
 
@@ -17,7 +25,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ForceTree);
+export default connect(mapStateToProps, mapDispatchToProps)(ForceTree);

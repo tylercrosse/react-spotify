@@ -16,7 +16,7 @@ export default function Result({ result, onResultSelect }) {
   return (
     <button
       className="result"
-      onClick={() => onResultSelect(result)}
+      onClick={() => onResultSelect(result.id)}
     >
       {image}
       <span>{result.name}</span>
