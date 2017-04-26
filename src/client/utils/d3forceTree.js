@@ -111,14 +111,15 @@ const d3ForceTree = (function iife() {
         .on('end', _dragended)
       )
       .on('dblclick', (d) => {
-        actions.d3dblclick(d);
+        // TODO refactor actions?
+        actions.requestRelatedArtists(d.id);
       })
       .on('mouseover', (d) => {
         const e = d3.event;
-        actions.d3mouseover(d, e);
+        actions.nodeMouseOver(d, e);
       })
       .on('mouseout', (d) => {
-        actions.d3mouseout(d);
+        actions.nodeMouseOut(d);
       });
 
     defs = node.append('defs');

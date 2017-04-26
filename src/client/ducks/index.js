@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
-import search from './search';
-import forceData from './forceData';
-import d3Reducer from './d3Reducer';
+import artist from './artist';
+import ui from './ui';
 
 const rootReducer = combineReducers({
   auth,
-  search,
-  forceData,
-  d3Reducer
+  artist,
+  ui
 });
 
 export default rootReducer;

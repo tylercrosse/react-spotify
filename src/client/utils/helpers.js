@@ -10,6 +10,9 @@ const helpers = (function iife() {
     });
   }
   function handleRelatedRes(id, json, state) {
+    const { forceData, search } = state.artist;
+
+    // build nodes & links
     const newNodes = json.artists.map(val => ({
       id: val.id,
       cluster: id,
@@ -22,10 +25,12 @@ const helpers = (function iife() {
       target: val.id
     }));
 
-    if (Object.keys(state.forceData).length === 0) {
-      // no old data
-      const source = state.search.results.find(obj => obj.id === id);
+    // no old data
+    if (Object.keys(forceData).length === 0) {
+      // grab the artist object that was clicked on in search results
+      const source = search.results.find(obj => obj.id === id);
 
+      // add it in with the other nodes
       newNodes.push({
         id: source.id,
         cluster: source.id,
@@ -33,19 +38,26 @@ const helpers = (function iife() {
         image: source.images.pop(),
         details: source
       });
+
+      // return -> forceData
       return {
         nodes: newNodes,
         links: newLinks
       };
     }
-    const allNodes = state.forceData.nodes.reduce((acc, node) => {
-      acc[node.id] = node;
-      return acc;
-    }, {});
+    // yes old data, key the old nodes by id
+    const allNodes = forceData.nodes
+      .reduce((acc, node) => {
+        acc[node.id] = node;
+        return acc;
+      }, {});
+
+    // don't add duplicates
     for (const node of newNodes) {
       allNodes[node.id] = allNodes[node.id] || node;
     }
-    const allLinks = state.forceData.links
+    // build links, & key them by source:target
+    const allLinks = forceData.links
       .map(n => ({
         source: n.source.id,
         target: n.target.id
@@ -55,21 +67,26 @@ const helpers = (function iife() {
         return acc;
       }, {});
 
+    // cross refrence links to build web
     for (const link of newLinks) {
       const key = `${link.source}:${link.target}`;
       allLinks[key] = allLinks[key] || link;
     }
+
+    // return -> forceData
     return {
       nodes: _values(allNodes).map(_Node),
       links: _values(allLinks).map(_Link)
     };
   }
+  // normalize output
   function _Node({ id, cluster, name, image, details }) {
     return { id, cluster, name, image, details };
   }
   function _Link({ source, target }) {
     return { source, target };
   }
+  // remove weird keys
   function _values(object) {
     return Object.keys(object).map(key => object[key]);
   }

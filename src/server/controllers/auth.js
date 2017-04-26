@@ -1,5 +1,6 @@
-import request from 'request';
+import request     from 'request';
 import querystring from 'querystring';
+import logger      from '../config/logger';
 
 const stateKey = 'spotify_auth_state';
 let env = {};
@@ -11,6 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
   process.env.s_redirect_uri = env.s_redirect_uri;
 }
 
+const buffer = Buffer.from(process.env.s_client_id + ':' + process.env.s_client_secret).toString('base64');
+
 function _generateRandomString(length) {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,7 +22,7 @@ function _generateRandomString(length) {
   }
   return text;
 }
-function spotifyLogin(req, res) {
+export function spotifyLogin(req, res) {
   const state = _generateRandomString(16);
   const scope = 'user-read-private user-read-email';
   res.cookie(stateKey, state);
@@ -32,7 +35,7 @@ function spotifyLogin(req, res) {
       state
     }));
 }
-function spotifyCallback(req, res) {
+export function spotifyCallback(req, res) {
   const code = req.query.code || null;
   const state = req.query.state || null;
   const authOptions = {
@@ -43,7 +46,7 @@ function spotifyCallback(req, res) {
       grant_type: 'authorization_code'
     },
     headers: {
-      Authorization: 'Basic ' + (new Buffer(process.env.s_client_id + ':' + process.env.s_client_secret).toString('base64'))
+      Authorization: 'Basic ' + buffer
     },
     json: true
   };
@@ -69,7 +72,7 @@ function spotifyCallback(req, res) {
     });
   }
 }
-function spotifyRefreshData(req, res) {
+export function spotifyRefreshData(req, res) {
   const options = {
     url: 'https://api.spotify.com/v1/me',
     headers: { Authorization: 'Bearer ' + req.session.s_access_token },
@@ -80,17 +83,17 @@ function spotifyRefreshData(req, res) {
       // find || create in db if there was one
       req.session.current_user = body;
       req.session.save((err) => {
-        err && console.log(err);
+        err && logger.error(err);
       });
     }
   });
   res.redirect('/');
 }
-function spotifyRefreshToken(req, res) {
+export function spotifyRefreshToken(req, res) {
   const refresh_token = req.query.refresh_token;
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: {Authorization: 'Basic ' + (new Buffer(process.env.s_client_id + ':' + process.env.s_client_secret).toString('base64'))},
+    headers: {Authorization: 'Basic ' + buffer},
     form: {
       grant_type: 'refresh_token',
       refresh_token
@@ -106,7 +109,7 @@ function spotifyRefreshToken(req, res) {
     }
   });
 }
-function checkAuth(req, res) {
+export function checkAuth(req, res) {
   res.header('Access-Control-Allow-Credentials', 'true');
   if (req.session.s_access_token) {
     res.json({
@@ -118,11 +121,3 @@ function checkAuth(req, res) {
     res.json({isAuthenticated: 'false'});
   }
 }
-
-export {
-  spotifyLogin,
-  spotifyCallback,
-  spotifyRefreshData,
-  spotifyRefreshToken,
-  checkAuth
-};

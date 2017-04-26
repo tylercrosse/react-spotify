@@ -29,8 +29,11 @@ function NodeDetails({ hoveredNode }) {
 
 function mapStateToProps(state) {
   return {
-    hoveredNode: state.d3Reducer.hoveredNode
+    hoveredNode: state.ui.hoveredNode
   };
 }
 
-export default connect(mapStateToProps, null)(NodeDetails);
+export default connect(
+  mapStateToProps,
+  null
+)(NodeDetails);

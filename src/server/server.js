@@ -1,23 +1,24 @@
-// import path from 'path';
-import express from 'express';
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../../webpack.config';
-import routes from './routes/routes';
+import express        from 'express';
+import compression    from 'compression';
+import session        from 'express-session';
+import cookieParser   from 'cookie-parser';
+import expressWinston from 'express-winston';
+import logger, {
+  errLogger,
+  reqLogger }         from './config/logger';
+import routes         from './config/routes';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port =  process.env.PORT || 3000;
 const app = express();
 let env = {};
 
-if (process.env.NODE_ENV !== 'production') {
+if (isDeveloping) {
   env = require('./env.json');
   process.env.session_secret = env.session_secret;
 }
 
+// session middleware
 app.use(cookieParser());
 app.use(session({
   secret: process.env.session_secret,
@@ -31,30 +32,32 @@ app.use((req, res, next) => {
   res.locals.current_user = (req.session.current_user || null);
   next();
 });
+
+// webpack middleware for dev
+if (isDeveloping) {
+  const webpackDevMiddlewareInstance = require('./config/devConfig.js').webpackDevMiddlewareInstance;
+  const webpackHotMiddlewareInstance = require('./config/devConfig.js').webpackHotMiddlewareInstance;
+
+  app.use(webpackDevMiddlewareInstance);
+  app.use(webpackHotMiddlewareInstance);
+}
+
+app.use(compression());
+app.use(expressWinston.logger({
+  winstonInstance: reqLogger
+}));
+// routing
 app.use(express.static('public'));
 app.use('/', routes);
 
-if (isDeveloping) {
-  const compiler = webpack(config);
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-    contentBase: 'src',
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  });
-  app.use(middleware);
-  app.use(webpackHotMiddleware(compiler));
-}
+// error logging
+app.use(expressWinston.errorLogger({
+  winstonInstance: errLogger
+}));
 
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
-    console.log(err);
+    logger.error(err);
   }
-  console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
+  logger.info('==> 🌎 Listening at http://0.0.0.0:%s/', port);
 });
