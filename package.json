@@ -13,7 +13,8 @@
     "build:server": "cross-env NODE_ENV=production npm run babel -- ./src -d ./compiled",
     "babel": "babel --presets es2015,stage-0 --ignore node_modules,public,client,*.spec.js",
     "lint": "eslint .",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "autoprefixer": "^6.0.3",
