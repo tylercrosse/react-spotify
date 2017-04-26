@@ -8,6 +8,14 @@ This app is a visualization of how Spotify relates artists. I'm currently lookin
 You can test a fully working live demo at https://related-artists.herokuapp.com/
 
 ---
+### Major features:
+
+- Search Spotify for Artists
+- Visualize connections between artists as a force tree
+- Drag & Zoom visualization
+- Double click on an artist in the visualization to grow the tree
+
+---
 ### Built with
 
 ##### <img height="20" src="https://cdn.rawgit.com/tylercrosse/gitter-clone/9c26fc47/src/client/assets/img/react.svg"> [React](https://facebook.github.io/react/)
