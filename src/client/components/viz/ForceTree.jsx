@@ -1,8 +1,13 @@
-import React       from 'react';
-import ReactDOM    from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { requestRelatedArtists } from '../../ducks/artist';
+import { nodeMouseOver, nodeMouseOut } from '../../ducks/ui';
 import d3ForceTree from '../../utils/d3forceTree';
+import './viz.scss';
 
-export default class ForceTree extends React.Component {
+class ForceTree extends React.Component {
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
     d3ForceTree.create(el, null, this.getForceTreeState(), this.props.actions);
@@ -25,8 +30,28 @@ export default class ForceTree extends React.Component {
     return this.props.forceData;
   }
   render() {
-    return (
-      <div className="d3" />
-    );
+    return <div className="d3" />;
   }
 }
+
+const Actions = {
+  requestRelatedArtists,
+  nodeMouseOver,
+  nodeMouseOut
+};
+
+function mapStateToProps(state) {
+  return {
+    forceData: state.artist.forceData
+  };
+}
+
+// TODO clean up actions?
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForceTree);

@@ -37,13 +37,11 @@ const ui = combineReducers({
 export default ui;
 
 // action creators
-export function hideResults() {
-  return {
-    type: HIDE_RESULTS
-  };
-}
+export const hideResults = () => ({
+  type: HIDE_RESULTS
+});
 
-export function nodeMouseOver(node, event) {
+export const nodeMouseOver = (node, event) => {
   node.clientX = event.clientX; // eslint-disable-line no-param-reassign
   node.clientY = event.clientY; // eslint-disable-line no-param-reassign
   return (dispatch) => {
@@ -52,13 +50,11 @@ export function nodeMouseOver(node, event) {
       node,
     });
   };
-}
+};
 
-export function nodeMouseOut(node) {
-  return (dispatch) => {
-    dispatch({
-      type: NODE_MOUSE_OUT,
-      node
-    });
-  };
-}
+export const nodeMouseOut = node => (dispatch) => {
+  dispatch({
+    type: NODE_MOUSE_OUT,
+    node
+  });
+};

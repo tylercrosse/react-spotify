@@ -111,6 +111,7 @@ const d3ForceTree = (function iife() {
         .on('end', _dragended)
       )
       .on('dblclick', (d) => {
+        // TODO refactor actions?
         actions.requestRelatedArtists(d.id);
       })
       .on('mouseover', (d) => {

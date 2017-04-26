@@ -17,16 +17,14 @@ export default function auth(state = {}, action) {
 }
 
 // action creators
-export function requestValidation() {
-  return (dispatch) => {
-    fetch('auth/validate', {credentials: 'include'})
-      .then(res => res.json())
-      .then((json) => {
-        dispatch({
-          type: REQUEST_VALIDATION,
-          payload: json
-        });
+export const requestValidation = () => (dispatch) => {
+  fetch('auth/validate', {credentials: 'include'})
+    .then(res => res.json())
+    .then((json) => {
+      dispatch({
+        type: REQUEST_VALIDATION,
+        payload: json
       });
-      // .catch((err) => {console.log('Request failed', err)})
-  };
-}
+    });
+    // .catch((err) => {console.log('Request failed', err)})
+};

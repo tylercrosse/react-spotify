@@ -33,4 +33,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(NodeDetails);
+export default connect(
+  mapStateToProps,
+  null
+)(NodeDetails);

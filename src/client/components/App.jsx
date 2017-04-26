@@ -1,13 +1,12 @@
 import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import { connect }            from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { hideResults }        from '../ducks/ui';
 import { requestValidation }  from '../ducks/auth';
 import Login                  from './user/Login.jsx';
 import LoggedIn               from './user/LoggedIn.jsx';
-import SearchContainer        from './search/SearchContainer.jsx';
-import ForceTreeContainer     from './viz/ForceTreeContainer.jsx';
+import Search                 from './search/Search.jsx';
+import ForceTree              from './viz/ForceTree.jsx';
 import NodeDetails            from './viz/NodeDetails.jsx';
 import                             './global.scss';
 
@@ -19,7 +18,7 @@ class App extends React.Component {
   componentDidMount() {
     window.addEventListener('click', this.handleClick, false);
 
-    this.props.actions.requestValidation();
+    this.props.requestValidation();
   }
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClick, false);
@@ -28,7 +27,7 @@ class App extends React.Component {
     if (this.props.showResults) {
       const area = ReactDOM.findDOMNode(this.results);
       if (!area.contains(e.target)) {
-        this.props.actions.hideResults();
+        this.props.hideResults();
       }
     }
   }
@@ -41,11 +40,11 @@ class App extends React.Component {
     return (
       <div>
         <div className="nav">
-          <SearchContainer ref={(c) => { this.results = c; }} />
+          <Search ref={(c) => { this.results = c; }} />
           <LoggedIn userData={this.props.userData} />
         </div>
         {(Object.keys(this.props.forceData).length > 0) &&
-          <ForceTreeContainer />}
+          <ForceTree />}
         {this.props.hoveredNode &&
           <NodeDetails />}
       </div>
@@ -63,18 +62,7 @@ function mapStateToProps(state) {
   };
 }
 
-const Actions = {
-  hideResults,
-  requestValidation
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  };
-}
-
-export default App = connect(
+export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { hideResults, requestValidation }
 )(App);

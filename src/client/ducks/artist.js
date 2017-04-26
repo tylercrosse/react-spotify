@@ -38,34 +38,30 @@ const artist = combineReducers({
 export default artist;
 
 // action creators
-export function requestArtists(query) {
-  return (dispatch, getState) => {
-    const state = getState();
-    fetch(`https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(query)}&type=artist`, {headers: {Authorization: 'Bearer ' + state.auth.access_token}})
-      .then(res => res.json())
-      .then((json) => {
-        dispatch({
-          type: REQUEST_ARTISTS,
-          payload: json
-        });
+export const requestArtists = query => (dispatch, getState) => {
+  const state = getState();
+  fetch(`https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(query)}&type=artist`, {headers: {Authorization: 'Bearer ' + state.auth.access_token}})
+    .then(res => res.json())
+    .then((json) => {
+      dispatch({
+        type: REQUEST_ARTISTS,
+        payload: json
       });
-      // .catch((err) => {console.log('Request failed', err)})
-  };
-}
+    });
+    // .catch((err) => {console.log('Request failed', err)})
+};
 
-export function requestRelatedArtists(id) {
-  return (dispatch, getState) => {
-    const state = getState();
-    fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {Authorization: 'Bearer ' + state.auth.access_token}})
-      .then(res => res.json())
-      .then((json) => {
-        const computedForceData = helpers.handleRelatedRes(id, json, state);
-        dispatch({
-          type: REQUEST_RELATED_ARTISTS,
-          payload: computedForceData
-        });
-        dispatch(hideResults());
+export const requestRelatedArtists = id => (dispatch, getState) => {
+  const state = getState();
+  fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {Authorization: 'Bearer ' + state.auth.access_token}})
+    .then(res => res.json())
+    .then((json) => {
+      const computedForceData = helpers.handleRelatedRes(id, json, state);
+      dispatch({
+        type: REQUEST_RELATED_ARTISTS,
+        payload: computedForceData
       });
-      // .catch((err) => {console.log('Request failed', err)})
-  };
-}
+      dispatch(hideResults());
+    });
+    // .catch((err) => {console.log('Request failed', err)})
+};
