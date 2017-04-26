@@ -3,15 +3,19 @@ import helpers from '../utils/helpers';
 import { hideResults } from './ui';
 
 // actions
-export const REQUEST_ARTISTS = 'REQUEST_ARTISTS';
-export const REQUEST_RELATED_ARTISTS = 'REQUEST_RELATED_ARTISTS';
+export const ARTIST_SEARCH_REQUEST = 'ARTIST_SEARCH_REQUEST';
+export const ARTIST_SEARCH_SUCCESS = 'ARTIST_SEARCH_SUCCESS';
+export const ARTIST_SEARCH_FAILURE = 'ARTIST_SEARCH_FAILURE';
+export const RELATED_ARTISTS_REQUEST = 'RELATED_ARTISTS_REQUEST';
+export const RELATED_ARTISTS_SUCCESS = 'RELATED_ARTISTS_SUCCESS';
+export const RELATED_ARTISTS_FAILURE = 'RELATED_ARTISTS_FAILURE';
 
 // reducers
 function search(state = [], action) {
   switch (action.type) {
-    case REQUEST_ARTISTS:
+    case ARTIST_SEARCH_SUCCESS:
       return {
-        results: action.payload.artists.items,
+        results: action.payload.artists.items
       };
     default:
       return state;
@@ -20,7 +24,7 @@ function search(state = [], action) {
 
 function forceData(state = {}, action) {
   switch (action.type) {
-    case REQUEST_RELATED_ARTISTS:
+    case RELATED_ARTISTS_SUCCESS:
       return {
         ...state,
         ...action.payload
@@ -40,28 +44,53 @@ export default artist;
 // action creators
 export const requestArtists = query => (dispatch, getState) => {
   const state = getState();
-  fetch(`https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(query)}&type=artist`, {headers: {Authorization: 'Bearer ' + state.auth.access_token}})
+  dispatch({
+    type: ARTIST_SEARCH_REQUEST
+  });
+
+  fetch(
+    `https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(query)}&type=artist`,
+    { headers: { Authorization: 'Bearer ' + state.auth.access_token } }
+  )
     .then(res => res.json())
     .then((json) => {
       dispatch({
-        type: REQUEST_ARTISTS,
+        type: ARTIST_SEARCH_SUCCESS,
         payload: json
       });
+    })
+    .catch((err) => {
+      console.error('Request failed', err);
+      dispatch({
+        type: ARTIST_SEARCH_FAILURE,
+        payload: err
+      });
     });
-    // .catch((err) => {console.log('Request failed', err)})
 };
 
 export const requestRelatedArtists = id => (dispatch, getState) => {
   const state = getState();
-  fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {headers: {Authorization: 'Bearer ' + state.auth.access_token}})
+  dispatch({
+    type: RELATED_ARTISTS_SUCCESS
+  });
+
+  fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
+    headers: { Authorization: 'Bearer ' + state.auth.access_token }
+  })
     .then(res => res.json())
     .then((json) => {
       const computedForceData = helpers.handleRelatedRes(id, json, state);
       dispatch({
-        type: REQUEST_RELATED_ARTISTS,
+        type: RELATED_ARTISTS_SUCCESS,
         payload: computedForceData
       });
       dispatch(hideResults());
+    })
+    .catch((err) => {
+      console.error('Request failed', err);
+      dispatch({
+        type: RELATED_ARTISTS_FAILURE,
+        payload: err
+      });
     });
-    // .catch((err) => {console.log('Request failed', err)})
 };

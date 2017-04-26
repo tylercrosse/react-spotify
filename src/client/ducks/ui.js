@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { REQUEST_ARTISTS } from './artist';
+import { ARTIST_SEARCH_SUCCESS } from './artist';
 
 // actions
 export const NODE_MOUSE_OVER = 'NODE_MOUSE_OVER';
@@ -20,7 +20,7 @@ function hoveredNode(state = null, action) {
 
 function showResults(state = false, action) {
   switch (action.type) {
-    case REQUEST_ARTISTS:
+    case ARTIST_SEARCH_SUCCESS:
       return true;
     case HIDE_RESULTS:
       return false;
