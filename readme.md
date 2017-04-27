@@ -5,7 +5,7 @@ This app is a visualization of how Spotify relates artists. I'm currently lookin
 ---
 ### Demo
 
-You can test a fully working live demo at https://related-artists.herokuapp.com/
+You can test a fully working live demo at https://spotify-related.now.sh/
 
 ---
 ### Major features:
