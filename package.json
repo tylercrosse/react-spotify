@@ -2,19 +2,19 @@
   "name": "spotify-related",
   "version": "0.1.1",
   "description": "A visulaization of related artists",
-  "main": "app.js",
+  "main": "./compiled/server/server.js",
   "author": "Tyler Crosse",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node compiled/server/server.js",
+    "postinstall": "npm run build",
+    "start": "cross-env NODE_ENV=production node ./compiled/server/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --ignore client/ ./src/server/",
     "build": "rimraf ./compiled && npm run build:server && npm run build:client",
     "build:client": "cross-env NODE_ENV=production webpack --progress --profile --colors",
     "build:server": "cross-env NODE_ENV=production npm run babel -- ./src -d ./compiled",
     "babel": "babel --presets es2015,stage-0 --ignore node_modules,public,client,*.spec.js",
     "lint": "eslint .",
-    "lint:staged": "lint-staged",
-    "postinstall": "npm run build"
+    "lint:staged": "lint-staged"
   },
   "dependencies": {
     "autoprefixer": "^6.0.3",

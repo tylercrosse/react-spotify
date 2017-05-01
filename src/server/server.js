@@ -14,6 +14,7 @@ const app = express();
 let env = {};
 
 if (isDeveloping) {
+  logger.info('🚧  in dev 🚧');
   env = require('./env.json');
   process.env.session_secret = env.session_secret;
 }
