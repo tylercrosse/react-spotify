@@ -9,6 +9,7 @@ export const ARTIST_SEARCH_FAILURE = 'ARTIST_SEARCH_FAILURE';
 export const RELATED_ARTISTS_REQUEST = 'RELATED_ARTISTS_REQUEST';
 export const RELATED_ARTISTS_SUCCESS = 'RELATED_ARTISTS_SUCCESS';
 export const RELATED_ARTISTS_FAILURE = 'RELATED_ARTISTS_FAILURE';
+export const REMOVE_RELATED_ARTISTS = 'REMOVE_RELATED_ARTISTS';
 
 // reducers
 function search(state = [], action) {
@@ -29,6 +30,8 @@ function forceData(state = {}, action) {
         ...state,
         ...action.payload
       };
+    case REMOVE_RELATED_ARTISTS:
+      return {};
     default:
       return state;
   }
@@ -93,4 +96,11 @@ export const requestRelatedArtists = id => (dispatch, getState) => {
         payload: err
       });
     });
+};
+
+export const newRleatedArtists = id => (dispatch) => {
+  dispatch({
+    type: REMOVE_RELATED_ARTISTS
+  });
+  dispatch(requestRelatedArtists(id));
 };
