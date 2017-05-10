@@ -43,6 +43,7 @@ class Viz extends React.Component {
         <div className="nav">
           <Search ref={(c) => { this.results = c; }} />
           <Link to="/about">About</Link>
+          <Link to="/animation">Animation</Link>
           <LoggedIn userData={this.props.userData} />
         </div>
         {(Object.keys(this.props.forceData).length > 0) &&
