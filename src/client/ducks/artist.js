@@ -9,6 +9,7 @@ export const ARTIST_SEARCH_FAILURE = 'ARTIST_SEARCH_FAILURE';
 export const RELATED_ARTISTS_REQUEST = 'RELATED_ARTISTS_REQUEST';
 export const RELATED_ARTISTS_SUCCESS = 'RELATED_ARTISTS_SUCCESS';
 export const RELATED_ARTISTS_FAILURE = 'RELATED_ARTISTS_FAILURE';
+export const REMOVE_RELATED_ARTISTS = 'REMOVE_RELATED_ARTISTS';
 
 // reducers
 function search(state = [], action) {
@@ -29,6 +30,8 @@ function forceData(state = {}, action) {
         ...state,
         ...action.payload
       };
+    case REMOVE_RELATED_ARTISTS:
+      return {};
     default:
       return state;
   }
@@ -52,7 +55,14 @@ export const requestArtists = query => (dispatch, getState) => {
     `https://api.spotify.com/v1/search?q=${helpers.fixedEncodeURIComponent(query)}&type=artist`,
     { headers: { Authorization: 'Bearer ' + state.auth.access_token } }
   )
-    .then(res => res.json())
+    .then((res) => {
+      if (res.ok) return res.json();
+      else if (res.status === 401) {
+        window.location = 'http://0.0.0.0:3000/auth/spotify/refresh_token';
+        // throw new Error(`Unauthorized! ${res.statusText}`);
+      }
+      throw new Error(`Something went wrong with the artists search request. Status: ${res.status}`);
+    })
     .then((json) => {
       dispatch({
         type: ARTIST_SEARCH_SUCCESS,
@@ -60,7 +70,7 @@ export const requestArtists = query => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      console.error('Request failed', err);
+      console.error('Request failed', err); // TODO display relevant errors to user
       dispatch({
         type: ARTIST_SEARCH_FAILURE,
         payload: err
@@ -69,16 +79,26 @@ export const requestArtists = query => (dispatch, getState) => {
 };
 
 export const requestRelatedArtists = id => (dispatch, getState) => {
-  const state = getState();
   dispatch({
     type: RELATED_ARTISTS_SUCCESS
   });
+  const state = getState();
+  const url = `https://api.spotify.com/v1/artists/${id}/related-artists`;
 
-  fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
+  fetch(url, {
     headers: { Authorization: 'Bearer ' + state.auth.access_token }
   })
-    .then(res => res.json())
+    .then((res) => {
+      if (res.ok) return res.json();
+      else if (res.status === 401) {
+        throw new Error(`Unauthorized! ${res.statusText}`);
+      }
+      throw new Error(`Something went wrong with the artists search request. Status: ${res.status}`);
+    })
     .then((json) => {
+      if (json.artists.length === 0) {
+        throw new Error('There is no related-artists information for this artist.');
+      }
       const computedForceData = helpers.handleRelatedRes(id, json, state);
       dispatch({
         type: RELATED_ARTISTS_SUCCESS,
@@ -87,10 +107,17 @@ export const requestRelatedArtists = id => (dispatch, getState) => {
       dispatch(hideResults());
     })
     .catch((err) => {
-      console.error('Request failed', err);
+      console.error('Request failed:', err); // TODO display relevant errors to user
       dispatch({
         type: RELATED_ARTISTS_FAILURE,
         payload: err
       });
     });
+};
+
+export const newRleatedArtists = id => (dispatch) => {
+  dispatch({
+    type: REMOVE_RELATED_ARTISTS
+  });
+  dispatch(requestRelatedArtists(id));
 };

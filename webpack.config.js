@@ -68,15 +68,6 @@ const webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        include: [path.resolve(__dirname, './src')],
-        query: {
-          presets: ['react-hmre']
-        }
-      },
-      {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         loader: 'file-loader'
       },
@@ -121,7 +112,8 @@ if (isProd) {
         filename: 'js/serviceWorker.js',
         // maximumFileSizeToCacheInBytes: 4194304,
         // minify: true,
-        staticFileGlobs: [
+        staticFileGlobs: [,
+          'public/index.html',
           'public/img/**.*',
           'public/font/**.*',
         ],
@@ -171,6 +163,15 @@ if (isProd) {
         { loader: 'style-loader' },
         ...sharedSassLoaders
       ]
+    },
+    {
+      test: /\.(js|jsx)$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      include: [path.resolve(__dirname, './src')],
+      query: {
+        presets: ['react-hmre']
+      }
     }
   );
 }

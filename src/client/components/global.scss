@@ -6,6 +6,7 @@
 }
 
 body {
+  overflow: hidden;
   font: {
     size: 100%;
     family: $primary-font; // variables inside partials > _variables.scss

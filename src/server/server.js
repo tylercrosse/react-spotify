@@ -6,7 +6,7 @@ import expressWinston from 'express-winston';
 import logger, {
   errLogger,
   reqLogger }         from './config/logger';
-import routes         from './config/routes';
+import router         from './config/routes';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port =  process.env.PORT || 3000;
@@ -14,6 +14,7 @@ const app = express();
 let env = {};
 
 if (isDeveloping) {
+  logger.info('🚧  in dev 🚧');
   env = require('./env.json');
   process.env.session_secret = env.session_secret;
 }
@@ -48,7 +49,7 @@ app.use(expressWinston.logger({
 }));
 // routing
 app.use(express.static('public'));
-app.use('/', routes);
+app.use('/', router);
 
 // error logging
 app.use(expressWinston.errorLogger({

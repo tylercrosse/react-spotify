@@ -2,7 +2,7 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import Searchbar              from './Searchbar.jsx';
 import ResultsList            from './ResultsList.jsx';
-import { requestRelatedArtists,
+import { newRleatedArtists,
   requestArtists } from '../../ducks/artist';
 
 import                             './search.scss';
@@ -15,7 +15,7 @@ const Search = props => (
     {props.showResults &&
       <ResultsList
         results={props.results}
-        onResultSelect={props.requestRelatedArtists}
+        onResultSelect={props.newRleatedArtists}
       />}
   </div>
 );
@@ -29,5 +29,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { requestRelatedArtists, requestArtists }
+  { newRleatedArtists, requestArtists }
 )(Search);
