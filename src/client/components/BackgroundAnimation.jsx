@@ -6,7 +6,7 @@ import EasePack from 'gsap/EasePack'; // eslint-disable-line no-unused-vars
 class BackgroundAnimation extends React.Component {
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
-    bgAnimate(el);
+    bgAnimate(el, this.props.lineColor, this.props.circleColor);
   }
   render() {
     return <canvas />;
@@ -15,7 +15,7 @@ class BackgroundAnimation extends React.Component {
 
 export default BackgroundAnimation;
 
-function bgAnimate(el) {
+function bgAnimate(el, lineColor, circleColor) {
   const canvas = el;
   let width;
   let height;
@@ -81,10 +81,11 @@ function bgAnimate(el) {
 
     // assign a circle to each point
     for (const i in points) { // eslint-disable-line guard-for-in
+      const color = circleColor === 'random' ? randColor() : circleColor;
       const c = new Circle(
         points[i],
         2 + (Math.random() * 2),
-        'rgba(255,255,255,0.3)'
+        color
       );
       points[i].circle = c;
     }
@@ -184,7 +185,7 @@ function bgAnimate(el) {
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
       ctx.lineTo(p.closest[i].x, p.closest[i].y);
-      ctx.strokeStyle = `rgba(208, 208, 208, ${p.active})`;
+      ctx.strokeStyle = `rgba(${lineColor} ${p.active})`;
       ctx.stroke();
     }
   }
@@ -203,7 +204,7 @@ function bgAnimate(el) {
       if (!_this.active) return;
       ctx.beginPath();
       ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
-      ctx.fillStyle = `rgba(0, 255, 84, ${_this.active})`;
+      ctx.fillStyle = `rgba(${_this.color} ${_this.active})`;
       ctx.fill();
     };
   }
@@ -211,5 +212,10 @@ function bgAnimate(el) {
   // Util
   function getDistance(p1, p2) {
     return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2); // eslint-disable-line
+  }
+
+  function randColor() {
+    const randScaledVal = () => Math.round(Math.random() * 255);
+    return `${randScaledVal()}, ${randScaledVal()}, ${randScaledVal()},`;
   }
 }

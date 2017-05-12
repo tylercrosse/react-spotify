@@ -4,6 +4,7 @@ import { connect }            from 'react-redux';
 import { Link }               from 'react-router';
 import { hideResults }        from '../ducks/ui';
 import { requestValidation }  from '../ducks/auth';
+import BackgroundAnimaiton    from './BackgroundAnimation';
 import Login                  from './user/Login.jsx';
 import LoggedIn               from './user/LoggedIn.jsx';
 import Search                 from './search/Search.jsx';
@@ -39,15 +40,15 @@ class Viz extends React.Component {
       );
     }
     return (
-      <div>
+      <div className="viz">
         <div className="nav">
           <Search ref={(c) => { this.results = c; }} />
           <Link to="/about">About</Link>
-          <Link to="/animation">Animation</Link>
           <LoggedIn userData={this.props.userData} />
         </div>
-        {(Object.keys(this.props.forceData).length > 0) &&
-          <ForceTree />}
+        {(Object.keys(this.props.forceData).length > 0) ?
+          <ForceTree /> :
+          <BackgroundAnimaiton lineColor="255, 255, 255," circleColor="random" />}
         {this.props.hoveredNode &&
           <NodeDetails />}
       </div>

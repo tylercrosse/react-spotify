@@ -1,5 +1,9 @@
 @import '../_variables.scss';
 
+.viz canvas {
+  background-color: $color-7;
+}
+
 .link {
   stroke: #fff;
   stroke-opacity: 0.6;
@@ -34,7 +38,8 @@
     overflow: hidden;
   }
 
-  h3, p {
+  h3,
+  p {
     margin: 0;
   }
 
@@ -46,9 +51,8 @@
 
   p {
     font-size: 12px;
-    color: $color-7
+    color: $color-7;
   }
-
 }
 
 .d3 {
